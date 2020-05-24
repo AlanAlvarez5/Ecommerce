@@ -5,6 +5,7 @@ use vstore;
 
 -- YYYY-MM-DD HH:MM:SS
 create table if not exists usuario(
+	id int not null auto_increment,
     nombre varchar(75) not null,
     correo varchar(30) not null,
     password varchar(8) not null,
@@ -13,7 +14,7 @@ create table if not exists usuario(
     cp varchar(10) not null,
     ciudad varchar(30) not null,
     admin boolean not null,
-    primary key (correo)
+    primary key (id)
 )ENGINE = INNODB;
 
 create table if not exists producto(
@@ -29,13 +30,13 @@ create table if not exists producto(
 
 create table if not exists compra(
 	id int not null auto_increment,
-    correo varchar(30) not null,
+    usuario_id int  not null,
     total float(10,2) not null,
     fecha_hora timestamp not null default current_timestamp,
     estado varchar(20) not null,
     primary key(id),
-    constraint fk_compra_usuario foreign key(correo)
-		references usuario(correo)
+    constraint fk_compra_usuario foreign key(usuario_id)
+		references usuario(id)
         on delete cascade
         on update cascade
 )ENGINE = INNODB;
