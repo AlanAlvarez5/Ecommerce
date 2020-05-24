@@ -1,13 +1,12 @@
 <template>
   <nav>
-    <v-app-bar temporary
-               app
-               class="gradient-45deg-indigo-purple"
-               dark
-               flat
-               min-height="250px"
+    <v-app-bar
+            class="gradient-45deg-indigo-purple"
+            dark
+            flat
+            min-height="230px"
     >
-      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+      <v-toolbar-title>ECOMMERCE</v-toolbar-title>
       <v-text-field
               solo
               flat
@@ -15,65 +14,57 @@
               prepend-inner-icon="mdi-magnify"
               clearable
               background-color="gradient-45deg-indigo-purple-non"
-              class="mt-7 mx-lg-4 mx-sm-0"
+              class="mt-7 mx-5"
       ></v-text-field>
       <v-btn icon>
-        <v-icon>mdi-export</v-icon>
+        <v-icon>mdi-cart</v-icon>
       </v-btn>
+      <v-menu
+              v-model="accountMenu"
+              :close-on-content-click="false"
+              :nudge-width="200"
+              transition="slide-y-transition"
+              offset-y
+      >
+        <template v-slot:activator="{ on }">
+          <v-btn
+                  icon
+                  v-on="on">
+            <v-icon>mdi-account</v-icon>
+          </v-btn>
+        </template>
+
+        <v-card>
+          <v-list>
+            <v-list-item>
+              <v-list-item-avatar>
+                <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John">
+              </v-list-item-avatar>
+
+              <v-list-item-content>
+                <v-list-item-title>Nombre Apellido</v-list-item-title>
+                <v-list-item-subtitle>Cliente</v-list-item-subtitle>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
+
+          <v-divider></v-divider>
+
+          <v-card-actions>
+            <v-spacer></v-spacer>
+
+            <v-btn text @click="accountMenu = false">Cerrar sesión</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-menu>
     </v-app-bar>
-    <v-navigation-drawer
-            app
-            v-model="drawer"
-            class="gradient-45deg-indigo-purple"
-            width="310px"
-    >
-      <v-list-item dark>
-        <v-container class="mt-11">
-          <v-row justify="center">
-            <v-list-item-avatar size="100">
-              <v-img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcS18YDZmgMSKH_YgxIl5xroBN0c0eJmq0u56Y2iPV-atZBf0xJk&usqp=CAU"></v-img>
-            </v-list-item-avatar>
-          </v-row>
-          <v-row justify="center" class="mt-2" style="margin-left: -30px">
-            <p>Nombre Apellido</p>
-          </v-row>
-        </v-container>
-      </v-list-item>
-      <v-divider></v-divider>
-
-      <v-list dark>
-        <v-list-item
-                v-for="item in items"
-                :key="item.title"
-                :to="{name: item.route}"
-        >
-          <v-list-item-icon>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-icon>
-
-          <v-list-item-content>
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-      <template v-slot:append>
-        <div class="pa-2">
-          <v-btn text block dark>Cerrar sesión</v-btn>
-        </div>
-      </template>
-    </v-navigation-drawer>
   </nav>
 </template>
 <script>
   export default {
-    data() {
-      return {
-        drawer: null,
-        items: [
-          { title: 'Catálogo', icon: 'mdi-book-open-page-variant', route: 'Catalogue'},
-          // { title: 'Carrito', icon: 'mdi-cart' },
-        ],
-      }
-    },
-  };
+    data: () => ({
+      accountMenu: false,
+      cartMenu: false,
+    }),
+  }
 </script>

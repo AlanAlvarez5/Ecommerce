@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <appNavbar/>
-    <v-content>
+    <v-content style="margin-top: -140px">
       <router-view/>
     </v-content>
   </v-app>
