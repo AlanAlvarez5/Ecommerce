@@ -15,6 +15,12 @@ Vue.use(VueRouter);
     name: 'HomeAdmin',
     component: () => import('../views/admin/HomeAdmin.vue')
   },
+  {
+    path: '/ProductsAdmin',
+    name: 'ProductsAdmin',
+    component: () => import('../views/admin/ProductsAdmin.vue')
+  },
+  
   // {
   //   path: '/about',
   //   name: 'About',
