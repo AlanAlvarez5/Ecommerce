@@ -26,8 +26,8 @@ app.use((req, res, next) => {
 });
 
 // Routes
-app.use('/api', require('./routes'));
-app.use('/api', require('./routes/usuario'));
+// app.use('/api', require('./routes'));
+app.use('/api/usuario', require('./routes/usuario'));
 
 
 app.use(history());

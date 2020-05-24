@@ -16,8 +16,11 @@ Ingresar a la carpeta del BackEnd Servidor
 npm install
 ```
 
-3.- Correr Servidor
+3.-  Editar archivo keys.js con la información de tu base de datos y usuario.
+
+
+4.- Correr Servidor
 
 ```bash
-npm run dev
+npm run devbabel
 ```
