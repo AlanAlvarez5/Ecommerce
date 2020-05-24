@@ -9,8 +9,13 @@ import path from 'path';
 import history from 'connect-history-api-fallback';
 import multer from 'multer';
 
+
 // Asignar puerto
 app.set('port', process.env.PORT || 3000);
+
+// jws
+const { llave } = require('./keys');
+app.set('llave', llave);
 
 // Middlewares
 app.use(morgan('tiny'));
@@ -41,7 +46,7 @@ app.use((req, res, next) => {
 });
 
 // Routes
-// app.use('/api', require('./routes'));
+app.use('/api', require('./routes'));
 app.use('/api/usuario', require('./routes/usuario'));
 app.use('/api/producto', require('./routes/producto'));
 

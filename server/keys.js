@@ -4,5 +4,6 @@ module.exports = {
         user: 'root',
         password: 'easiermean5',
         database: 'vstore'
-    }
+    },
+    llave: 'asuputamadreestoymamadisimo',
 }
