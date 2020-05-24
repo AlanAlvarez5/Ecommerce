@@ -50,9 +50,17 @@
               <v-divider/>
               <v-card-text class="mt-1">
                 <p class="grey--text text--darken-2 my-1" v-for="item in description">
-                  <v-icon>mdi-circle-small</v-icon> {{ item }}
+                  <v-icon>mdi-circle-small</v-icon>
+                  {{ item }}
                 </p>
-                <p class="headline mt-5">${{ price }}.00</p>
+                <v-select
+                        style="width: 120px"
+                        class="mt-4"
+                        v-model="quantitySelected"
+                        :items="quantityArray"
+                        label="Cantidad:"
+                ></v-select>
+                <p class="headline mt-5">${{ totalPrice }}.00</p>
               </v-card-text>
               <v-btn
                       dark
@@ -71,14 +79,35 @@
 </template>
 
 <script>
+  import {utils} from "./mixins/utils";
+
   export default {
+    mixins: [utils],
     props: ['brand', 'name', 'price', 'stock', 'img', 'description'],
     data() {
       return {
+        quantitySelected: 1,
+        quantityArray: null,
         showDialog: false
       }
     },
+    computed: {
+      totalPrice() {
+        return this.numberWithCommas(this.price * this.quantitySelected);
+      }
+    },
+    watch: {
+      showDialog(willOpen) {
+        if(willOpen) {
+          const array = [...Array(this.stock + 1).keys()];
+          array.shift();
+          this.quantityArray = array;
+          this.quantitySelected = 1;
+        }
+      }
+    },
     created() {
+
     }
   }
 </script>
