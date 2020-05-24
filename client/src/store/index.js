@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import {API} from '../components/axios/api';
 
 Vue.use(Vuex)
 
@@ -11,7 +12,7 @@ export default new Vuex.Store({
       show: false
     },
     account: {
-      token: '213213',
+      token: null,
       isAdmin: false
     }
   },
@@ -24,6 +25,10 @@ export default new Vuex.Store({
     },
   },
   mutations: {
+    authUser(state, userData) {
+      state.account.token = userData.token;
+      state.account.isAdmin = userData.isAdmin;
+    },
     showSnackBar(state, payload) {
       state.snackBar.text = payload.text;
       state.snackBar.color = payload.color;
@@ -34,7 +39,27 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    async login({commit}, authData) {
+      try {
+        const response = await API.post('/login', {
+          correo: authData.email,
+          password: authData.password
+        });
+        if (response.data.mensaje !== 'INVALID_USERNAME_PASSWORD') {
+          commit('authUser', {
+            token: response.data.token,
+            isAdmin: response.data.usuario.admin === 1
+          });
+          return 'ACCESS';
+        } else {
+          return 'Constraseña incorrecta';
+        }
+      } catch (e) {
+        console.error(e);
+        return 'Error interno.';
+      }
+
+    }
   },
-  modules: {
-  }
+  modules: {}
 })

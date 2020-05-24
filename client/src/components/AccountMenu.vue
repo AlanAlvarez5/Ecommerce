@@ -38,16 +38,18 @@
       <template v-else>
         <v-container class="px-10">
           <v-row class="mt-2">
-            <p>No has iniciado sesión.</p>
+            <p class="subtitle-1">No has iniciado sesión.</p>
           </v-row>
           <v-row>
             <v-text-field
+                    v-model="formData.email"
                     label="Correo"
                     placeholder="Introduce tu correo"
             ></v-text-field>
           </v-row>
           <v-row>
             <v-text-field
+                    v-model="formData.password"
                     label="Contraseña"
                     placeholder="Introduce tu contraseña"
                     type="password"
@@ -58,7 +60,17 @@
                     block
                     dark
                     color="gradient-45deg-deep-purple-blue"
-            >Iniciar sesión</v-btn>
+                    @click="submitLoginData"
+            >Iniciar sesión
+            </v-btn>
+          </v-row>
+          <v-row>
+            <v-col cols="7">
+              <p class="caption">¿No tienes cuenta?</p>
+            </v-col>
+            <v-col cols="2" style="margin-top: -3px">
+              <v-btn text x-small color="red">Regístrate</v-btn>
+            </v-col>
           </v-row>
         </v-container>
       </template>
@@ -67,11 +79,17 @@
 </template>
 
 <script>
-  import {mapGetters} from 'vuex';
+  import {mapGetters, mapActions} from 'vuex';
+
   export default {
     data() {
       return {
         accountMenu: false,
+        registerMode: false,
+        formData: {
+          password: '',
+          email: ''
+        }
       }
     },
     computed: {
@@ -79,6 +97,21 @@
         'isAuthenticated',
         'isAdmin'
       ])
+    },
+    methods: {
+      ...mapActions(['login']),
+      async submitLoginData() {
+        const result = await this.login({
+          email: this.formData.email,
+          password: this.formData.password
+        });
+        if(result === 'ACCESS') {
+          this.accountMenu = false;
+        } else {
+          this.formData.password = '';
+          this.formData.email = '';
+        }
+      }
     }
   }
 </script>
