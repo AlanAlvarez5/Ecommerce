@@ -15,7 +15,12 @@
               clearable
               background-color="gradient-45deg-indigo-purple-non"
               class="mt-7 mx-5"
-      ></v-text-field>
+      ></v-text-field>    
+        <v-toolbar-items v-if="admin">
+            <v-btn text > <v-icon>mdi-dolly</v-icon> Productos</v-btn>
+            <v-btn text> <v-icon>mdi-account-supervisor</v-icon> Clientes</v-btn>
+            <v-btn text> <v-icon>mdi-truck-delivery</v-icon>Seguimiento Pedido</v-btn>
+      </v-toolbar-items>
       <v-btn
               @click="showCart"
               icon
@@ -64,6 +69,7 @@
   import Cart from "./Cart";
   export default {
     data: () => ({
+      admin: true, 
       accountMenu: false,
       cartMenu: false,
     }),
