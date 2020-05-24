@@ -16,7 +16,7 @@
     </v-row>
 
     <v-card-text class="headline text-center">
-      <div>${{ price }}</div>
+      <div>${{ numberWithCommas(price) }}.00</div>
     </v-card-text>
 
     <v-card-actions>
@@ -60,14 +60,15 @@
                         :items="quantityArray"
                         label="Cantidad:"
                 ></v-select>
-                <p class="headline mt-5">${{ totalPrice }}.00</p>
+                <p class="headline mt-5">${{ numberWithCommas(getTotalPrice) }}.00</p>
               </v-card-text>
               <v-btn
                       dark
                       style="margin-top: -10px"
                       class="gradient-45deg-purple-deep-orange px-8"
-                      @click="dialog = false"
+                      @click="addToCart"
               >
+                <v-icon left>mdi-cart</v-icon>
                 AGREGAR AL CARRITO
               </v-btn>
             </v-col>
@@ -83,17 +84,19 @@
 
   export default {
     mixins: [utils],
-    props: ['brand', 'name', 'price', 'stock', 'img', 'description'],
+    props: ['brand', 'name', 'price', 'stock', 'img', 'description', 'product_id'],
     data() {
       return {
         quantitySelected: 1,
+        totalPrice: null,
         quantityArray: null,
         showDialog: false
       }
     },
     computed: {
-      totalPrice() {
-        return this.numberWithCommas(this.price * this.quantitySelected);
+      getTotalPrice() {
+        this.totalPrice = this.price * this.quantitySelected;
+        return this.numberWithCommas(this.totalPrice);
       }
     },
     watch: {
@@ -103,15 +106,45 @@
           array.shift();
           this.quantityArray = array;
           this.quantitySelected = 1;
+          this.totalPrice = this.price;
         }
       }
     },
-    created() {
-
+    methods: {
+      addToCart() {
+        const storageCart = localStorage.getItem('cart');
+        if(storageCart) {
+          const cart = JSON.parse(storageCart);
+          const itemIndex = cart.findIndex(el => el.product_id === this.product_id);
+          if(itemIndex === -1) {
+            cart.push({
+              product_id: this.product_id,
+              brand: this.brand,
+              name: this.name,
+              price: this.price,
+              quantity: this.quantitySelected,
+              img: this.img,
+            });
+          } else {
+            cart[itemIndex].quantity += this.quantitySelected;
+          }
+          localStorage.setItem('cart', JSON.stringify(cart));
+        } else {
+          localStorage.setItem('cart', JSON.stringify([{
+            product_id: this.product_id,
+            brand: this.brand,
+            name: this.name,
+            price: this.price,
+            quantity: this.quantitySelected,
+            img: this.img,
+          }]));
+        }
+        this.$store.commit('showSnackBar', {
+          color: 'gradient-45deg-deep-purple-blue',
+          text: 'Se agregó el producto.'
+        });
+        this.showDialog = false;
+      }
     }
   }
 </script>
-
-<style scoped>
-
-</style>
