@@ -10,6 +10,18 @@ export default new Vuex.Store({
       color: null,
       show: false
     },
+    account: {
+      token: '213213',
+      isAdmin: false
+    }
+  },
+  getters: {
+    isAuthenticated(state) {
+      return state.account.token !== null;
+    },
+    isAdmin(state) {
+      return state.account.isAdmin;
+    },
   },
   mutations: {
     showSnackBar(state, payload) {
