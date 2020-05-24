@@ -24,7 +24,6 @@ router.get('/login', async (req, res) => {
                         admin: false
                     };
                 }
-    
                 const token = jwt.sign(payload, req.app.get('llave'), {
                     expiresIn: 1440
                 });

@@ -37,8 +37,7 @@ app.use(multer({
 }).single('img'))
 
 // Usar views
-app.use(express.static(path.join(__dirname, 'views')));
-app.use(express.static(path.join(__dirname, 'public'))); // hostname/img/1.png
+app.use(express.static(path.join(__dirname, 'public/'))); // hostname/img/1.png
 
 // Global
 app.use((req, res, next) => {
