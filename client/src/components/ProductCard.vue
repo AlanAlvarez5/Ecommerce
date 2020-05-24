@@ -1,7 +1,6 @@
 <template>
   <v-card
-          class="mx-auto px-2 py-2"
-          max-width="400"
+          class="px-2 py-2"
   >
     <v-container>
       <v-card-title>{{ name }}</v-card-title>
@@ -76,11 +75,10 @@
     props: ['brand', 'name', 'price', 'stock', 'img', 'description'],
     data() {
       return {
-        showDialog: true
+        showDialog: false
       }
     },
     created() {
-      console.log(this.description);
     }
   }
 </script>
