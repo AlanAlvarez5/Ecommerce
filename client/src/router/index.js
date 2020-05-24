@@ -10,6 +10,11 @@ Vue.use(VueRouter);
     name: 'Home',
     component: Home
   },
+  {
+    path: '/HomeAdmin',
+    name: 'HomeAdmin',
+    component: () => import('../views/HomeAdmin.vue')
+  }
   // {
   //   path: '/about',
   //   name: 'About',
