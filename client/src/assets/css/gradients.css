@@ -1,0 +1,269 @@
+.gradient-45deg-light-blue-teal {
+    background: -webkit-linear-gradient(45deg,#b3e5fc,#64ffda)!important;
+    background: linear-gradient(45deg,#b3e5fc,#64ffda)!important
+}
+
+.gradient-45deg-light-blue-teal.gradient-shadow {
+    box-shadow: 0 6px 20px 0 rgba(100,255,218,.5)!important
+}
+
+.gradient-45deg-indigo-light-blue {
+    background: -webkit-linear-gradient(45deg,#3949ab,#4fc3f7)!important;
+    background: linear-gradient(45deg,#3949ab,#4fc3f7)!important
+}
+
+.gradient-45deg-indigo-light-blue.gradient-shadow {
+    box-shadow: 0 6px 20px 0 rgba(79,195,247,.5)!important
+}
+
+.gradient-45deg-light-blue-indigo {
+    background: -webkit-linear-gradient(45deg,#b3e5fc,#9fa8da)!important;
+    background: linear-gradient(45deg,#b3e5fc,#9fa8da)!important
+}
+
+.gradient-45deg-light-blue-indigo.gradient-shadow {
+    box-shadow: 0 6px 20px 0 rgba(159,168,218,.5)!important
+}
+
+.gradient-45deg-yellow-green {
+    background: -webkit-linear-gradient(45deg,#ffff8d,#b9f6ca)!important;
+    background: linear-gradient(45deg,#ffff8d,#b9f6ca)!important
+}
+
+.gradient-45deg-yellow-green.gradient-shadow {
+    box-shadow: 0 6px 20px 0 rgba(185,246,202,.5)!important
+}
+
+.gradient-45deg-orange-deep-orange {
+    background: -webkit-linear-gradient(45deg,#ffe0b2,#ffccbc)!important;
+    background: linear-gradient(45deg,#ffe0b2,#ffccbc)!important
+}
+
+.gradient-45deg-orange-deep-orange.gradient-shadow {
+    box-shadow: 0 6px 20px 0 rgba(255,204,188,.5)!important
+}
+
+.gradient-45deg-deep-purple-purple {
+    background: -webkit-linear-gradient(45deg,#d1c4e9,#f3e5f5)!important;
+    background: linear-gradient(45deg,#d1c4e9,#f3e5f5)!important
+}
+
+.gradient-45deg-deep-purple-purple.gradient-shadow {
+    box-shadow: 0 6px 20px 0 rgba(243,229,245,.5)!important
+}
+
+.gradient-45deg-red-pink {
+    background: -webkit-linear-gradient(45deg,#ff5252,#f48fb1)!important;
+    background: linear-gradient(45deg,#ff5252,#f48fb1)!important
+}
+
+.gradient-45deg-red-pink.gradient-shadow {
+    box-shadow: 0 6px 20px 0 rgba(244,143,177,.5)!important
+}
+
+.gradient-45deg-light-green-amber {
+    background: -webkit-linear-gradient(45deg,#c5e1a5,#fff8e1)!important;
+    background: linear-gradient(45deg,#c5e1a5,#fff8e1)!important
+}
+
+.gradient-45deg-light-green-amber.gradient-shadow {
+    box-shadow: 0 6px 20px 0 rgba(255,248,225,.5)!important
+}
+
+.gradient-45deg-amber-amber {
+    background: -webkit-linear-gradient(45deg,#ff6f00,#ffca28)!important;
+    background: linear-gradient(45deg,#ff6f00,#ffca28)!important
+}
+
+.gradient-45deg-amber-amber.gradient-shadow {
+    box-shadow: 0 6px 20px 0 rgba(255,202,40,.5)!important
+}
+
+.gradient-45deg-purple-pink {
+    background: -webkit-linear-gradient(45deg,#ea80fc,#fce4ec)!important;
+    background: linear-gradient(45deg,#ea80fc,#fce4ec)!important
+}
+
+.gradient-45deg-purple-pink.gradient-shadow {
+    box-shadow: 0 6px 20px 0 rgba(252,228,236,.5)!important
+}
+
+.gradient-45deg-teal-cyan {
+    background: -webkit-linear-gradient(45deg,#e0f2f1,#00e5ff)!important;
+    background: linear-gradient(45deg,#e0f2f1,#00e5ff)!important
+}
+
+.gradient-45deg-teal-cyan.gradient-shadow {
+    box-shadow: 0 6px 20px 0 rgba(0,229,255,.5)!important
+}
+
+.gradient-45deg-blue-grey-blue-grey {
+    background: -webkit-linear-gradient(45deg,#cfd8dc,#546e7a)!important;
+    background: linear-gradient(45deg,#cfd8dc,#546e7a)!important
+}
+
+.gradient-45deg-blue-grey-blue-grey.gradient-shadow {
+    box-shadow: 0 6px 20px 0 rgba(84,110,122,.5)!important
+}
+
+.gradient-45deg-indigo-blue.gradient-shadow,.gradient-45deg-orange-amber.gradient-shadow {
+    box-shadow: 0 6px 20px 0 rgba(25,118,210,.5)!important
+}
+
+.gradient-45deg-orange-amber {
+    background: -webkit-linear-gradient(45deg,#e65100,#1976d2)!important;
+    background: linear-gradient(45deg,#e65100,#1976d2)!important
+}
+
+.gradient-45deg-indigo-blue {
+    background: -webkit-linear-gradient(45deg,#303f9f,#1976d2)!important;
+    background: linear-gradient(45deg,#303f9f,#1976d2)!important
+}
+
+.gradient-45deg-brown-brown {
+    background: -webkit-linear-gradient(45deg,#6d4c41,#bbdefb)!important;
+    background: linear-gradient(45deg,#6d4c41,#bbdefb)!important
+}
+
+.gradient-45deg-brown-brown.gradient-shadow {
+    box-shadow: 0 6px 20px 0 rgba(187,222,251,.5)!important
+}
+
+.gradient-45deg-blue-grey-blue {
+    background: -webkit-linear-gradient(45deg,#263238,#2979ff)!important;
+    background: linear-gradient(45deg,#263238,#2979ff)!important
+}
+
+.gradient-45deg-blue-grey-blue.gradient-shadow {
+    box-shadow: 0 6px 20px 0 rgba(41,121,255,.5)!important
+}
+
+.gradient-45deg-purple-deep-orange {
+    background: -webkit-linear-gradient(45deg,#8e24aa,#ff6e40)!important;
+    background: linear-gradient(45deg,#8e24aa,#ff6e40)!important
+}
+
+.gradient-45deg-purple-deep-orange.gradient-shadow {
+    box-shadow: 0 6px 20px 0 rgba(255,110,64,.5)!important
+}
+
+.gradient-45deg-green-teal {
+    background: -webkit-linear-gradient(45deg,#43a047,#1de9b6)!important;
+    background: linear-gradient(45deg,#43a047,#1de9b6)!important
+}
+
+.gradient-45deg-green-teal.gradient-shadow {
+    box-shadow: 0 6px 20px 0 rgba(29,233,182,.5)!important
+}
+
+.gradient-45deg-purple-light-blue {
+    background: -webkit-linear-gradient(45deg,#e040fb,#4fc3f7)!important;
+    background: linear-gradient(45deg,#e040fb,#4fc3f7)!important
+}
+
+.gradient-45deg-purple-light-blue.gradient-shadow {
+    box-shadow: 0 6px 20px 0 rgba(79,195,247,.5)!important
+}
+
+.gradient-45deg-cyan-cyan {
+    background: -webkit-linear-gradient(45deg,#18ffff,#00e5ff)!important;
+    background: linear-gradient(45deg,#18ffff,#00e5ff)!important
+}
+
+.gradient-45deg-cyan-cyan.gradient-shadow {
+    box-shadow: 0 6px 20px 0 rgba(0,229,255,.5)!important
+}
+
+.gradient-45deg-yellow-teal {
+    background: -webkit-linear-gradient(45deg,#fff9c4,#64ffda)!important;
+    background: linear-gradient(45deg,#fff9c4,#64ffda)!important
+}
+
+.gradient-45deg-yellow-teal.gradient-shadow {
+    box-shadow: 0 6px 20px 0 rgba(100,255,218,.5)!important
+}
+
+.gradient-45deg-purple-deep-purple {
+    background: -webkit-linear-gradient(45deg,#7b1fa2,#7c4dff)!important;
+    background: linear-gradient(45deg,#7b1fa2,#7c4dff)!important
+}
+
+.gradient-45deg-purple-deep-purple.gradient-shadow {
+    box-shadow: 0 6px 20px 0 rgba(124,77,255,.5)!important
+}
+
+.gradient-45deg-cyan-light-green {
+    background: -webkit-linear-gradient(45deg,#0097a7,#b2ff59)!important;
+    background: linear-gradient(45deg,#0097a7,#b2ff59)!important
+}
+
+.gradient-45deg-cyan-light-green.gradient-shadow {
+    box-shadow: 0 6px 20px 0 rgba(178,255,89,.5)!important
+}
+
+.gradient-45deg-purple-amber {
+    background: -webkit-linear-gradient(45deg,#d500f9,#ffa000)!important;
+    background: linear-gradient(45deg,#d500f9,#ffa000)!important
+}
+
+.gradient-45deg-purple-amber.gradient-shadow {
+    box-shadow: 0 6px 20px 0 rgba(255,160,0,.5)!important
+}
+
+.gradient-45deg-indigo-purple {
+    background: -webkit-linear-gradient(45deg,#303f9f,#7b1fa2)!important;
+    background: linear-gradient(45deg,#303f9f,#7b1fa2)!important
+}
+.gradient-45deg-indigo-purple-non {
+    /*background: -webkit-linear-gradient(45deg,#303f9f,#7b1fa2)!important;*/
+    background: linear-gradient(45deg, #6f6db4,#915eb5)!important
+}
+
+.gradient-45deg-indigo-purple.gradient-shadow {
+    box-shadow: 0 6px 20px 0 rgba(123,31,162,.5)!important
+}
+
+.gradient-45deg-deep-purple-blue {
+    background: -webkit-linear-gradient(45deg,#6200ea,#1976d2)!important;
+    background: linear-gradient(45deg,#6200ea,#1976d2)!important
+}
+
+.gradient-45deg-deep-purple-blue.gradient-shadow {
+    box-shadow: 0 6px 20px 0 rgba(25,118,210,.5)!important
+}
+
+.gradient-45deg-deep-orange-orange {
+    background: -webkit-linear-gradient(45deg,#bf360c,#f57c00)!important;
+    background: linear-gradient(45deg,#bf360c,#f57c00)!important
+}
+
+.gradient-45deg-deep-orange-orange.gradient-shadow {
+    box-shadow: 0 6px 20px 0 rgba(245,124,0,.5)!important
+}
+
+.gradient-45deg-light-blue-cyan {
+    background: -webkit-linear-gradient(45deg,#0288d1,#26c6da)!important;
+    background: linear-gradient(45deg,#0288d1,#26c6da)!important
+}
+
+.gradient-45deg-light-blue-cyan.gradient-shadow {
+    box-shadow: 0 6px 20px 0 rgba(38,198,218,.5)!important
+}
+
+.gradient-45deg-blue-indigo {
+    background: -webkit-linear-gradient(45deg,#2962ff,#3949ab)!important;
+    background: linear-gradient(45deg,#2962ff,#3949ab)!important
+}
+
+.gradient-45deg-blue-indigo.gradient-shadow {
+    box-shadow: 0 6px 20px 0 rgba(57,73,171,.5)!important
+}
+
+.gradient-45deg-semi-dark {
+    background: -webkit-linear-gradient(right,#00aeff,#3369e6)!important;
+    background: linear-gradient(-90deg,#00aeff,#3369e6)!important
+}
+
+.gradient-45deg-semi-dark.gradient-shadow {
+    box-shadow: 0 6px 20px 0 rgba(51,105,230,.5)!important
+}
