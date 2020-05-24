@@ -39,11 +39,6 @@ app.use(multer({
 // Usar views
 app.use(express.static(path.join(__dirname, 'public/'))); // hostname/img/1.png
 
-// Global
-app.use((req, res, next) => {
-    next();
-});
-
 // Routes
 app.use('/api', require('./routes'));
 app.use('/api/usuario', require('./routes/usuario'));
