@@ -6,4 +6,5 @@ module.exports = {
         database: 'vstore'
     },
     llave: 'asuputamadreestoymamadisimo',
+    salt_rounds: 12
 }

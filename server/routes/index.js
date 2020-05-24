@@ -1,5 +1,7 @@
 import express from 'express';
 import jwt from 'jsonwebtoken';
+import bcrypt from 'bcryptjs';
+
 const router = express.Router();
 
 const db = require('../db');
@@ -7,30 +9,34 @@ const db = require('../db');
 router.get('/login', async (req, res) => {
     let { correo, password }  = req.body;
     try{
-        const usuario = await db.query(`SELECT * from usuario where correo = '${correo}' and password = '${password}'`);
+        const usuario = await db.query(`SELECT * from usuario where correo = '${correo}'`);
         if (usuario.length > 0){
-            let payload = {}
-            if (usuario[0].admin){
-                payload = {
-                    check: true,
-                    admin: true
-                };
-            } else {
-                payload = {
-                    check: true,
-                    admin: false
-                };
+            if ( bcrypt.compareSync(password, usuario[0].password)){
+                let payload = {}
+                if (usuario[0].admin){
+                   payload = {
+                        check: true,
+                        admin: true
+                    };
+                } else {
+                    payload = {
+                        check: true,
+                        admin: false
+                    };
+                }
+    
+                const token = jwt.sign(payload, req.app.get('llave'), {
+                    expiresIn: 1440
+                });
+    
+                res.json({
+                    mensaje: 'Autenticado',
+                    token,
+                    usuario
+                });
+            } else{
+                res.json({ mensaje: 'Usuario o contraseña incorrectos'});
             }
-
-            const token = jwt.sign(payload, req.app.get('llave'), {
-                expiresIn: 1440
-            });
-
-            res.json({
-                mensaje: 'Autenticado',
-                token,
-                usuario
-            });
         }else{
             res.json({ mensaje: 'Usuario o contraseña incorrectos'});
         }
@@ -46,9 +52,12 @@ router.get('/login', async (req, res) => {
 router.post('/signin', async (req, res) => {
     let { nombre, correo, password, telefono, direccion, cp, ciudad } = req.body;
     let admin = 0;
-
+    
+    const {salt_rounds} = require('../keys');
+    const hashed  = bcrypt.hashSync(password, salt_rounds)
+        
     try{
-        let record = await db.query(`INSERT into usuario (nombre, correo, password, telefono, direccion, cp, ciudad, admin) values ('${nombre}', '${correo}', '${password}', '${telefono}', '${direccion}', '${cp}', '${ciudad}', ${admin} )`)
+        let record = await db.query(`INSERT into usuario (nombre, correo, password, telefono, direccion, cp, ciudad, admin) values ('${nombre}', '${correo}', '${hashed}', '${telefono}', '${direccion}', '${cp}', '${ciudad}', ${admin} )`)
 
         let usuario = await db.query(`SELECT * from usuario where id = ${record.insertId}`)
 

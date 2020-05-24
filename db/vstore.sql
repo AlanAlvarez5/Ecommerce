@@ -8,7 +8,7 @@ create table if not exists usuario(
 	id int not null auto_increment,
     nombre varchar(75) not null,
     correo varchar(30) not null,
-    password varchar(8) not null,
+    password varchar(150) not null,
     telefono varchar(10) not null,
     direccion varchar(128) not null,
     cp varchar(10) not null,
