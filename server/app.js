@@ -6,22 +6,31 @@ const app = express();
 import morgan from 'morgan';
 import cors from 'cors';
 import path from 'path';
-
-app.use(morgan('tiny'));
-app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true}));
-
-// app.get('/', (req, res) => {
-//     res.send('Computo en la nube');
-// });
-
 import history from 'connect-history-api-fallback';
-app.use(history());
-app.use(express.static(path.join(__dirname, 'public')));
 
 // Asignar puerto
 app.set('port', process.env.PORT || 3000);
+
+// Middelwares
+app.use(morgan('tiny'));
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true})); //--Cuidado con imagenes
+  
+// Usar views
+app.use(express.static(path.join(__dirname, 'views')));
+
+// Global
+app.use((req, res, next) => {
+    next();
+});
+
+// Routes
+app.use('/api', require('./routes'));
+app.use('/api', require('./routes/usuario'));
+
+
+app.use(history());
 
 
 app.listen(app.get('port'), () => {
