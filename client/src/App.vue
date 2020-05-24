@@ -8,7 +8,8 @@
 </template>
 
 <script>
-  import Navbar from "./components/Navbar"
+  //import Navbar from "./components/Navbar"
+  import Navbar from "./components/NavbarAdmin"
   export default {
     components: {
       appNavbar: Navbar,
