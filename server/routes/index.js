@@ -26,9 +26,7 @@ router.post('/login', async (req, res) => {
                         id: usuario[0].id
                     };
                 }
-                const token = jwt.sign(payload, req.app.get('llave'), {
-                    expiresIn: 1440
-                });
+                const token = jwt.sign(payload, req.app.get('llave'));
     
                 res.json({
                     mensaje: 'Autenticado',
