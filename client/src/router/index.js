@@ -25,6 +25,11 @@ Vue.use(VueRouter);
     name: 'UsersAdmin',
     component: () => import('../views/admin/UsersAdmin.vue')
   },
+  {
+    path: '/About',
+    name: 'About',
+    component: () => import('../views/About.vue')
+  },
   
   // {
   //   path: '/about',
