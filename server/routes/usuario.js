@@ -4,7 +4,7 @@ import bcrypt from 'bcryptjs';
 const router = express.Router();
 
 router.use((req,res, next) => {
-    const token = req.headers['access-token'];
+    const token = req.headers.authorization.split(' ')[1];
     if (token) {
         jwt.verify(token, req.app.get('llave'), (err, decoded) => {
             if(err){
