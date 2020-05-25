@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 
 const router = express.Router()
 
-router.use((req,res, next) => {
+router.use((req, res, next) => {
     const token = req.headers['access-token'];
     if (token) {
         jwt.verify(token, req.app.get('llave'), (err, decoded) => {
@@ -24,43 +24,31 @@ router.use((req,res, next) => {
 const db = require('../db');
 
 router.get('/select', async (req, res) => {
-    if (req.decoded.admin){
-        try{
-            let productos = await db.query(`SELECT * from productos`);
-            res.json(productos)
-        }
-        catch (error){
-            return res.status(400).json({
-                mensaje: 'Query Error',
-                error
-            })
-        }
-    } else {
+    try{
+        let productos = await db.query(`SELECT * from productos`);
+        res.json(productos)
+    }
+    catch (error){
         return res.status(400).json({
-            mensaje: 'No permitido'
-        });
+            mensaje: 'Query Error',
+            error
+        })
     }
 });
 
+
+
 router.get('/select/:id', async (req, res) => {
-    if (req.decoded.admin){
-
-        let id = req.params.id;
-
-        try{
-            let productos = await db.query(`SELECT * from productos where id = ${id}`);
-            res.json(productos)
-        }
-        catch (error){
-            return res.status(400).json({
-                mensaje: 'Query Error',
-                error
-            })
-        }
-    } else {
+    let id = req.params.id;
+    try{
+        let productos = await db.query(`SELECT * from productos where id = ${id}`);
+        res.json(productos)
+    }
+    catch (error){
         return res.status(400).json({
-            mensaje: 'No permitido'
-        });
+            mensaje: 'Query Error',
+            error
+        })
     }
 });
 
