@@ -3,24 +3,6 @@ import jwt from 'jsonwebtoken';
 
 const router = express.Router()
 
-router.use((req, res, next) => {
-    const token = req.headers.authorization.split(' ')[1];
-    if (token) {
-        jwt.verify(token, req.app.get('llave'), (err, decoded) => {
-            if(err){
-                return res.json({ mensaje: 'Token invalido'});
-            } else {
-                req.decoded = decoded;
-                next();
-            }
-        });
-    } else{
-        res.send({
-            mensaje: 'Token no enviado'
-        });
-    }
-});
-
 const db = require('../db');
 
 router.get('/select', async (req, res) => {
@@ -36,6 +18,25 @@ router.get('/select', async (req, res) => {
     }
 });
 
+
+router.use((req, res, next) => {
+    const token = req.headers.authorization.split(' ')[1];
+    console.log(req.headers.authorization)
+    if (token) {
+        jwt.verify(token, req.app.get('llave'), (err, decoded) => {
+            if(err){
+                return res.json({ mensaje: 'Token invalido'});
+            } else {
+                req.decoded = decoded;
+                next();
+            }
+        });
+    } else{
+        res.send({
+            mensaje: 'Token no enviado'
+        });
+    }
+});
 
 
 router.get('/select/:id', async (req, res) => {
