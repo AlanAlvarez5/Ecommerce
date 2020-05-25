@@ -25,7 +25,7 @@ const db = require('../db');
 
 router.get('/select', async (req, res) => {
     try{
-        let productos = await db.query(`SELECT * from productos`);
+        let productos = await db.query(`SELECT * from producto`);
         res.json(productos)
     }
     catch (error){
@@ -41,7 +41,7 @@ router.get('/select', async (req, res) => {
 router.get('/select/:id', async (req, res) => {
     let id = req.params.id;
     try{
-        let productos = await db.query(`SELECT * from productos where id = ${id}`);
+        let productos = await db.query(`SELECT * from producto where id = ${id}`);
         res.json(productos)
     }
     catch (error){
