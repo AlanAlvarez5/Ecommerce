@@ -23,6 +23,48 @@ router.use((req,res, next) => {
 
 const db = require('../db');
 
+router.get('/select', async (req, res) => {
+    if (req.decoded.admin){
+        try{
+            let productos = await db.query(`SELECT * from productos`);
+            res.json(productos)
+        }
+        catch (error){
+            return res.status(400).json({
+                mensaje: 'Query Error',
+                error
+            })
+        }
+    } else {
+        return res.status(400).json({
+            mensaje: 'No permitido'
+        });
+    }
+});
+
+router.get('/select/:id', async (req, res) => {
+    if (req.decoded.admin){
+
+        let id = req.params.id;
+
+        try{
+            let productos = await db.query(`SELECT * from productos where id = ${id}`);
+            res.json(productos)
+        }
+        catch (error){
+            return res.status(400).json({
+                mensaje: 'Query Error',
+                error
+            })
+        }
+    } else {
+        return res.status(400).json({
+            mensaje: 'No permitido'
+        });
+    }
+});
+
+
 
 router.post('/add', async (req, res) => {
     if (req.decoded.admin){
@@ -33,7 +75,7 @@ router.post('/add', async (req, res) => {
         try{
             await db.query(`INSERT INTO producto (nombre, marca, descripcion, precio, stock, imagen ) VALUES ('${nombre}', '${marca}', '${descripcion}', '${precio}', '${stock}', '${imagen}')`);
             res.json({
-                mensaje: 'Producto agregado'
+                mensaje: 'PRODUCT_ADDED'
             })
         }
         catch (error){
@@ -47,7 +89,55 @@ router.post('/add', async (req, res) => {
             mensaje: 'No permitido'
         });
     }
-})
+});
+
+router.put('/edit/:id', async (req, res) => {
+    if (req.decoded.admin){
+        
+        let id = req.params.id;
+        let { nombre, marca, descripcion, precio, stock} = req.body;
+
+        try{
+            await db.query(`UPDATE producto SET nombre = '${nombre}', marca = '${marca}', descripcion = '${descripcion}', precio = '${precio}', stock = '${stock}' where id = ${id}`);
+            res.json({
+                mensaje: 'PRODUCT_UPDATED'
+            })
+        }
+        catch (error){
+            return res.status(400).json({
+                mensaje: 'Query Error',
+                error
+            })
+        }
+    } else {
+        return res.status(400).json({
+            mensaje: 'No permitido'
+        });
+    }
+});
+
+router.delete('/delete/:id', async (req, res) => {
+    let id = req.params.id;
+    if (req.decoded.admin){
+        try{
+            await db.query(`DELETE from producto where id = ${id}`)
+    
+            res.json({
+                mensaje: 'PRODUCT_DELETED',
+            });
+        } catch (error) {
+            return res.status(400).json({
+                mensaje: 'Query Error',
+                error
+            });
+        }
+    } else { 
+        return res.status(400).json({
+            mensaje: 'No permitido'
+        });
+    }
+});
+
 
 
 module.exports = router;
