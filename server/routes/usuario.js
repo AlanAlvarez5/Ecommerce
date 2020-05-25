@@ -79,13 +79,13 @@ router.get('/add', async (req, res) => {
             res.json({
                 mensaje: 'USER_REGISTERED',
                 usuario,
-            })
+            });
             
         } catch (error) {
             return res.status(400).json({
                 mensaje: 'Query Error',
                 error
-            })
+            });
         }
 
     } else {
@@ -105,7 +105,7 @@ router.put('/edit/:id', async (req, res) => {
         const hashed  = bcrypt.hashSync(password, salt_rounds);
 
         try{
-            let record = await db.query(`UPDATE usuario SET nombre = '${nombre}', correo = '${correo}', password = '${hashed}', telefono = '${telefono}', direccion = '${direccion}', cp = '${cp}', ciudad = '${ciudad}', admin = ${admin}`)
+            let record = await db.query(`UPDATE usuario SET nombre = '${nombre}', correo = '${correo}', password = '${hashed}', telefono = '${telefono}', direccion = '${direccion}', cp = '${cp}', ciudad = '${ciudad}', admin = ${admin} where id =  ${id}`)
     
             let usuario = await db.query(`SELECT * from usuario where id = ${record.insertId}`)
     
@@ -130,26 +130,21 @@ router.put('/edit/:id', async (req, res) => {
 
 
 router.delete('/delete/:id', async (req, res) => {
-
     let id = req.params.id;
     if (req.decoded.admin){
-
         try{
             await db.query(`DELETE from usuario where id = ${id}`)
     
             res.json({
                 mensaje: 'USER_DELETED',
-                usuario,
-            })
-            
+            });
         } catch (error) {
             return res.status(400).json({
                 mensaje: 'Query Error',
                 error
-            })
+            });
         }
-
-    } else {
+    } else { 
         return res.status(400).json({
             mensaje: 'No permitido'
         });
