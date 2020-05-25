@@ -4,11 +4,11 @@ import jwt from 'jsonwebtoken';
 const router = express.Router()
 
 router.use((req, res, next) => {
-    const token = req.headers.authorization.split(' ')[1];
-    if (token) {
+    if(req.headers.authorization) {
+        const token = req.headers.authorization.split(' ')[1];
         jwt.verify(token, req.app.get('llave'), (err, decoded) => {
-            if(err){
-                return res.json({ mensaje: 'Token invalido'});
+            if (err) {
+                return res.json({mensaje: 'Token invalido'});
             } else {
                 req.decoded = decoded;
                 next();
@@ -56,7 +56,7 @@ router.get('/select/:id', async (req, res) => {
 
 router.post('/add', async (req, res) => {
     if (req.decoded.admin){
-        
+
         let imagen = req.headers.host + '/img/'+ req.file.filename;
         let { nombre, marca, descripcion, precio, stock} = req.body;
 
@@ -81,7 +81,7 @@ router.post('/add', async (req, res) => {
 
 router.put('/edit/:id', async (req, res) => {
     if (req.decoded.admin){
-        
+
         let id = req.params.id;
         let { nombre, marca, descripcion, precio, stock} = req.body;
 
@@ -109,7 +109,7 @@ router.delete('/delete/:id', async (req, res) => {
     if (req.decoded.admin){
         try{
             await db.query(`DELETE from producto where id = ${id}`)
-    
+
             res.json({
                 mensaje: 'PRODUCT_DELETED',
             });
@@ -119,7 +119,7 @@ router.delete('/delete/:id', async (req, res) => {
                 error
             });
         }
-    } else { 
+    } else {
         return res.status(400).json({
             mensaje: 'No permitido'
         });

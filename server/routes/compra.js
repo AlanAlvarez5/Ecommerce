@@ -3,11 +3,11 @@ import jwt from 'jsonwebtoken';
 const router = express.Router();
 
 router.use((req,res, next) => {
-    const token = req.headers.authorization.split(' ')[1];
-    if (token) {
+    if(req.headers.authorization) {
+        const token = req.headers.authorization.split(' ')[1];
         jwt.verify(token, req.app.get('llave'), (err, decoded) => {
-            if(err){
-                return res.json({ mensaje: 'Token invalido'});
+            if (err) {
+                return res.json({mensaje: 'Token invalido'});
             } else {
                 req.decoded = decoded;
                 next();
