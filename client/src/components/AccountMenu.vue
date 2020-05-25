@@ -78,7 +78,7 @@
       <template v-else>
         <v-container class="px-10">
           <v-row class="mt-2">
-            <p class="subtitle-1">Registro</p>
+            <p class="subtitle-1">Introduce tus datos para registrarte.</p>
           </v-row>
           <v-row>
             <v-text-field
@@ -191,7 +191,11 @@
         this.formData.address = '';
         this.formData.city = '';
         this.formData.name = '';
-        this.registerMode = !this.registerMode;
+        this.accountMenu = false;
+        setTimeout(() => {
+          this.registerMode = !this.registerMode;
+          this.accountMenu = true;
+        },150);
       },
       async submitLoginData() {
         this.isLoggingIn = true;

@@ -14,7 +14,6 @@ export default new Vuex.Store({
     account: {
       userDetails: null,
       token: null,
-      isAdmin: false
     }
   },
   getters: {
@@ -22,22 +21,23 @@ export default new Vuex.Store({
       return state.account.token !== null;
     },
     isAdmin(state) {
-      return state.account.isAdmin;
+      return state.account.userDetails ? state.account.userDetails.admin === 1 : false;
     },
     getUserDetails(state) {
+      console.log(state.account.userDetails);
       return state.account.userDetails;
     }
   },
   mutations: {
     authUser(state, userData) {
       state.account.token = userData.token;
-      state.account.isAdmin = userData.isAdmin;
-      state.account.userDetails = userData.userDetails[0];
+      state.account.userDetails = userData.userDetails;
     },
     logoutUser(state) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('userDetails');
       state.account.userDetails = null;
       state.account.token = null;
-      state.account.isAdmin = false;
     },
     showSnackBar(state, payload) {
       state.snackBar.text = payload.text;
@@ -56,10 +56,11 @@ export default new Vuex.Store({
           password: authData.password
         });
         if (response.data.mensaje !== 'INVALID_USERNAME_PASSWORD') {
+          localStorage.setItem('token', response.data.token);
+          localStorage.setItem('userDetails', JSON.stringify(response.data.usuario[0]));
           commit('authUser', {
-            userDetails: response.data.usuario,
+            userDetails: response.data.usuario[0],
             token: response.data.token,
-            isAdmin: response.data.usuario.admin === 1
           });
           return 'ACCESS';
         } else {
@@ -69,7 +70,6 @@ export default new Vuex.Store({
         console.error(e);
         return 'Error interno.';
       }
-
     },
     async signin({commit}, authData) {
       try {
@@ -83,11 +83,11 @@ export default new Vuex.Store({
           nombre: authData.name,
         });
         if (response.data.mensaje === 'USER_REGISTERED') {
-          console.log('entra');
+          localStorage.setItem('token', response.data.token);
+          localStorage.setItem('userDetails', JSON.stringify(response.data.usuario[0]));
           commit('authUser', {
-            userDetails: response.data.usuario,
+            userDetails: response.data.usuario[0],
             token: response.data.token,
-            isAdmin: response.data.usuario.admin === 1
           });
           return 'REGISTERED';
         } else {
@@ -97,7 +97,18 @@ export default new Vuex.Store({
         console.error(e);
         return 'Error interno.';
       }
-
+    },
+    tryAutoLogin({commit}) {
+      const token = localStorage.getItem('token');
+      if(token) {
+        const userDetails = JSON.parse(localStorage.getItem('userDetails'));
+        commit('authUser', {
+          userDetails: userDetails,
+          token: token,
+        });
+      } else {
+        return 0;
+      }
     },
     logout({commit}) {
       commit('logoutUser');
