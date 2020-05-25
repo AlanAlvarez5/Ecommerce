@@ -22,10 +22,40 @@
             <v-list-item-avatar>
               <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John">
             </v-list-item-avatar>
-
             <v-list-item-content>
               <v-list-item-title>{{ getUserDetails.nombre }}</v-list-item-title>
               <v-list-item-subtitle>{{ isAdmin ? 'Administrador' : 'Cliente' }}</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+          <v-divider></v-divider>
+          <v-list-item>
+            <v-list-item-content>
+              <v-list-item-title>Teléfono</v-list-item-title>
+              <v-list-item-subtitle>{{ getUserDetails.telefono }}</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item>
+            <v-list-item-content>
+              <v-list-item-title>Ciudad</v-list-item-title>
+              <v-list-item-subtitle>{{ getUserDetails.ciudad }}</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item>
+            <v-list-item-content>
+              <v-list-item-title>Código postal</v-list-item-title>
+              <v-list-item-subtitle>{{ getUserDetails.cp }}</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item>
+            <v-list-item-content>
+              <v-list-item-title>Dirección</v-list-item-title>
+              <v-list-item-subtitle>{{ getUserDetails.direccion }}</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item>
+            <v-list-item-content>
+              <v-list-item-title>Correo</v-list-item-title>
+              <v-list-item-subtitle>{{ getUserDetails.correo }}</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
         </v-list>
