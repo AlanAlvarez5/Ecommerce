@@ -1,11 +1,11 @@
 <template>
     <v-container>
         <v-row>
-            <p class="display-1 white--text ml-3">Lista de Productos</p>
+            <p class="display-1 white--text ml-3">Lista de Usuarios</p>
         </v-row>
         <v-data-table
             :headers="headers"
-            :items="productos"
+            :items="users"
             sort-by="id"
             class="elevation-1"
         >
@@ -25,19 +25,28 @@
                     <v-container>
                         <v-row>
                         <v-col cols="12" sm="6" md="4">
-                            <v-text-field v-model="editedItem.nombre" label="Nombre del Producto"></v-text-field>
+                            <v-text-field v-model="editedItem.nombre" label="Nombre del Usuario"></v-text-field>
                         </v-col>
                         <v-col cols="12" sm="6" md="4">
-                            <v-text-field v-model="editedItem.marca" label="Marca"></v-text-field>
+                            <v-text-field v-model="editedItem.correo" label="Correo"></v-text-field>
                         </v-col>
                         <v-col cols="12" sm="6" md="4">
-                            <v-text-field v-model="editedItem.desc" label="Descripción"></v-text-field>
+                            <v-text-field v-model="editedItem.pass" label="Password"></v-text-field>
                         </v-col>
                         <v-col cols="12" sm="6" md="4">
-                            <v-text-field v-model="editedItem.precio" label="Precio"></v-text-field>
+                            <v-text-field v-model="editedItem.tel" label="Teléfono"></v-text-field>
                         </v-col>
                         <v-col cols="12" sm="6" md="4">
-                            <v-text-field v-model="editedItem.stock" label="Stock"></v-text-field>
+                            <v-text-field v-model="editedItem.dir" label="Dirección"></v-text-field>
+                        </v-col>
+                        <v-col cols="12" sm="6" md="4">
+                            <v-text-field v-model="editedItem.cp" label="CP"></v-text-field>
+                        </v-col>
+                        <v-col cols="12" sm="6" md="4">
+                            <v-text-field v-model="editedItem.ciudad" label="Ciudad"></v-text-field>
+                        </v-col>
+                        <v-col cols="12" sm="6" md="4">
+                            <v-text-field v-model="editedItem.admin" label="Administrador"></v-text-field>
                         </v-col>
                         </v-row>
                     </v-container>
@@ -77,41 +86,50 @@
       dialog: false,
       headers: [
         {
-          text: 'Id Producto',
+          text: 'Id Usuario',
           align: 'start',
           sortable: false,
           value: 'id',
         },
         { text: 'Nombre', value: 'nombre' },
-        { text: 'Marca', value: 'marca' },
-        { text: 'Descripción', value: 'desc' },
-        { text: 'Precio', value: 'precio'},
-        { text: 'Stock', value: 'stock'},
+        { text: 'Correo', value: 'correo' },
+        { text: 'Password', value: 'pass' },
+        { text: 'Teléfono', value: 'tel'},
+        { text: 'Dirección', value: 'dir'},
+        { text: 'CP', value: 'cp'},
+        { text: 'Ciudad', value: 'ciudad'},
+        { text: 'Admin', value: 'admin'},
         { text: 'Acciones', value: 'actions', sortable: false },
       ],
-      productos: [],
+      users: [],
       editedIndex: -1,
       editedItem: {
         id : '',
         nombre: '',
-        marca: '',
-        desc: '',
-        precio: 0,
-        stock: 0,
+        correo: '',
+        pass: '',
+        tel: '',
+        dir: '',
+        cp: 0,
+        ciudad: '',
+        admin: 0,
       },
       defaultItem: {
         id : '',
         nombre: '',
-        marca: '',
-        desc: '',
-        precio: 0,
-        stock: 0,
+        correo: '',
+        pass: '',
+        tel: '',
+        dir: '',
+        cp: 0,
+        ciudad: '',
+        admin: 0,
       },
     }),
 
     computed: {
       formTitle () {
-        return this.editedIndex === -1 ? 'Nuevo Producto' : 'Editar Producto'
+        return this.editedIndex === -1 ? 'Nuevo Usuario' : 'Editar Usuario'
       },
     },
 
@@ -130,14 +148,14 @@
       
     },
     editItem (item) {
-        this.editedIndex = this.productos.indexOf(item)
+        this.editedIndex = this.users.indexOf(item)
         this.editedItem = Object.assign({}, item)
         this.dialog = true
       },
 
     deleteItem (item) {
-        const index = this.productos.indexOf(item)
-        confirm('¿Seguro que deseas borrar este producto?') && this.productos.splice(index, 1)
+        const index = this.users.indexOf(item)
+        confirm('¿Seguro que deseas borrar este usuario?') && this.productos.splice(index, 1)
       },
 
     close () {
@@ -150,9 +168,9 @@
 
     save () {
         if (this.editedIndex > -1) {
-          Object.assign(this.productos[this.editedIndex], this.editedItem)
+          Object.assign(this.users[this.editedIndex], this.editedItem)
         } else {
-          this.productos.push(this.editedItem)
+          this.users.push(this.editedItem)
         }
         this.close()
       },
