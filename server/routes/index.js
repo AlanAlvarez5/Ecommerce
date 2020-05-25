@@ -6,7 +6,7 @@ const router = express.Router();
 
 const db = require('../db');
 
-router.get('/login', async (req, res) => {
+router.post('/login', async (req, res) => {
     let { correo, password }  = req.body;
     try{
         const usuario = await db.query(`SELECT * from usuario where correo = '${correo}'`);
@@ -34,10 +34,10 @@ router.get('/login', async (req, res) => {
                     usuario
                 });
             } else{
-                res.json({ mensaje: 'Usuario o contraseña incorrectos'});
+                res.json({ mensaje: 'INVALID_USERNAME_PASSWORD'});
             }
         }else{
-            res.json({ mensaje: 'Usuario o contraseña incorrectos'});
+            res.json({ mensaje: 'INVALID_USERNAME_PASSWORD'});
         }
     } catch (error) {
         return res.status(400).json({
@@ -69,7 +69,7 @@ router.post('/signin', async (req, res) => {
         });
 
         res.json({
-            mensaje: 'Usuario creado',
+            mensaje: 'USER_REGISTERED',
             usuario,
             token
         })

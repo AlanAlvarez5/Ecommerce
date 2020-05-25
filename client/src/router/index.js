@@ -13,8 +13,19 @@ Vue.use(VueRouter);
   {
     path: '/HomeAdmin',
     name: 'HomeAdmin',
-    component: () => import('../views/HomeAdmin.vue')
-  }
+    component: () => import('../views/admin/HomeAdmin.vue')
+  },
+  {
+    path: '/ProductsAdmin',
+    name: 'ProductsAdmin',
+    component: () => import('../views/admin/ProductsAdmin.vue')
+  },
+  {
+    path: '/UsersAdmin',
+    name: 'UsersAdmin',
+    component: () => import('../views/admin/UsersAdmin.vue')
+  },
+  
   // {
   //   path: '/about',
   //   name: 'About',
