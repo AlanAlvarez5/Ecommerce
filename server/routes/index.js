@@ -14,7 +14,6 @@ router.post('/login', async (req, res) => {
             if ( bcrypt.compareSync(password, usuario[0].password)){
                 let payload = {}
                 if (usuario[0].admin){
-                    
                    payload = {
                         check: true,
                         admin: true,
@@ -59,25 +58,32 @@ router.post('/signin', async (req, res) => {
     const hashed  = bcrypt.hashSync(password, salt_rounds)
         
     try{
-        let record = await db.query(`INSERT into usuario (nombre, correo, password, telefono, direccion, cp, ciudad, admin) values ('${nombre}', '${correo}', '${hashed}', '${telefono}', '${direccion}', '${cp}', '${ciudad}', ${admin} )`)
+        let is_registered = await db.query(`SELECT * from usuario where correo = '${correo}'`)
+        if (is_registered.length > 0){
+            res.json({
+                mensaje: 'USER_ALREADY_REGISTERED'
+            });
+        }else{
+            let record = await db.query(`INSERT into usuario (nombre, correo, password, telefono, direccion, cp, ciudad, admin) values ('${nombre}', '${correo}', '${hashed}', '${telefono}', '${direccion}', '${cp}', '${ciudad}', ${admin} )`)
 
-        let usuario = await db.query(`SELECT * from usuario where id = ${record.insertId}`)
+            let usuario = await db.query(`SELECT * from usuario where id = ${record.insertId}`)
 
-        const payload = {
-            check: true,
-            admin: false,
-            id: record.insertId
-        };
+            const payload = {
+                check: true,
+                admin: false,
+                id: record.insertId
+            };
 
-        const token = jwt.sign(payload, req.app.get('llave'), {
-            expiresIn: 1440
-        });
+            const token = jwt.sign(payload, req.app.get('llave'), {
+                expiresIn: 1440
+            });
 
-        res.json({
-            mensaje: 'USER_REGISTERED',
-            usuario,
-            token
-        })
+            res.json({
+                mensaje: 'USER_REGISTERED',
+                usuario,
+                token
+            });
+        }
         
     } catch (error) {
         return res.status(400).json({

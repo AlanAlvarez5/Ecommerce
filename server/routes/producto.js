@@ -36,9 +36,10 @@ router.get('/select', async (req, res) => {
     }
 });
 
+
+
 router.get('/select/:id', async (req, res) => {
     let id = req.params.id;
-
     try{
         let productos = await db.query(`SELECT * from productos where id = ${id}`);
         res.json(productos)
