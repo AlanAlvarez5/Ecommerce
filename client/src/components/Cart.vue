@@ -103,6 +103,10 @@
         localStorage.removeItem('cart');
         this.cartItems = [];
         this.showCart = false;
+        this.$store.commit('showSnackBar', {
+          color: 'gradient-45deg-deep-purple-blue',
+          text: 'Has vaciado el carrito.'
+        });
       }
     },
   }

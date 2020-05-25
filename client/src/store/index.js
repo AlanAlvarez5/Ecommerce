@@ -12,6 +12,7 @@ export default new Vuex.Store({
       show: false
     },
     account: {
+      userDetails: null,
       token: null,
       isAdmin: false
     }
@@ -23,11 +24,20 @@ export default new Vuex.Store({
     isAdmin(state) {
       return state.account.isAdmin;
     },
+    getUserDetails(state) {
+      return state.account.userDetails;
+    }
   },
   mutations: {
     authUser(state, userData) {
       state.account.token = userData.token;
       state.account.isAdmin = userData.isAdmin;
+      state.account.userDetails = userData.userDetails[0];
+    },
+    logoutUser(state) {
+      state.account.userDetails = null;
+      state.account.token = null;
+      state.account.isAdmin = false;
     },
     showSnackBar(state, payload) {
       state.snackBar.text = payload.text;
@@ -47,6 +57,7 @@ export default new Vuex.Store({
         });
         if (response.data.mensaje !== 'INVALID_USERNAME_PASSWORD') {
           commit('authUser', {
+            userDetails: response.data.usuario,
             token: response.data.token,
             isAdmin: response.data.usuario.admin === 1
           });
@@ -59,6 +70,37 @@ export default new Vuex.Store({
         return 'Error interno.';
       }
 
+    },
+    async signin({commit}, authData) {
+      try {
+        const response = await API.post('/signin', {
+          password: authData.password,
+          correo: authData.email,
+          cp: authData.cp,
+          telefono: authData.phone,
+          direccion: authData.address,
+          ciudad: authData.city,
+          nombre: authData.name,
+        });
+        if (response.data.mensaje === 'USER_REGISTERED') {
+          console.log('entra');
+          commit('authUser', {
+            userDetails: response.data.usuario,
+            token: response.data.token,
+            isAdmin: response.data.usuario.admin === 1
+          });
+          return 'REGISTERED';
+        } else {
+          return 'Error interno';
+        }
+      } catch (e) {
+        console.error(e);
+        return 'Error interno.';
+      }
+
+    },
+    logout({commit}) {
+      commit('logoutUser');
     }
   },
   modules: {}

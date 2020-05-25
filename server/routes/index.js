@@ -69,7 +69,7 @@ router.post('/signin', async (req, res) => {
         });
 
         res.json({
-            mensaje: 'Usuario creado',
+            mensaje: 'USER_REGISTERED',
             usuario,
             token
         })
