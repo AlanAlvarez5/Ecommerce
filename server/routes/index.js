@@ -14,6 +14,7 @@ router.post('/login', async (req, res) => {
             if ( bcrypt.compareSync(password, usuario[0].password)){
                 let payload = {}
                 if (usuario[0].admin){
+                    
                    payload = {
                         check: true,
                         admin: true,

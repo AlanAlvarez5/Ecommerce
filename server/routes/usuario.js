@@ -45,7 +45,7 @@ router.get('/select',  async (req, res) => {
 
 router.get('/select/:id', async(req, res) => {
     let id = req.params.id;
-    if ((!req.decoded.admin && req.decoded.id === id) || req.decoded.admin){
+    if ((!req.decoded.admin && req.decoded.id == id) || req.decoded.admin){
         try{
             const usuarios = await db.query(`SELECT * from usuario where id = ${id}`);
             res.json(usuarios);
@@ -98,7 +98,7 @@ router.get('/add', async (req, res) => {
 router.put('/edit/:id', async (req, res) => {
 
     let id = req.params.id;
-    if ((!req.decoded.admin && req.decoded.id === id) || req.decoded.admin){
+    if ((!req.decoded.admin && req.decoded.id == id) || req.decoded.admin){
         let { nombre, correo, password, telefono, direccion, cp, ciudad, admin } = req.body;
     
         const {salt_rounds} = require('../keys');
