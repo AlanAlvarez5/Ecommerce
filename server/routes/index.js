@@ -16,12 +16,14 @@ router.post('/login', async (req, res) => {
                 if (usuario[0].admin){
                    payload = {
                         check: true,
-                        admin: true
+                        admin: true,
+                        id: usuario[0].id
                     };
                 } else {
                     payload = {
                         check: true,
-                        admin: false
+                        admin: false,
+                        id: usuario[0].id
                     };
                 }
                 const token = jwt.sign(payload, req.app.get('llave'), {
@@ -61,7 +63,9 @@ router.post('/signin', async (req, res) => {
         let usuario = await db.query(`SELECT * from usuario where id = ${record.insertId}`)
 
         const payload = {
-            check: true
+            check: true,
+            admin: false,
+            id: record.insertId
         };
 
         const token = jwt.sign(payload, req.app.get('llave'), {
