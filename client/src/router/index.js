@@ -1,6 +1,12 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from '../store/index'
+
 import Home from "../views/Home";
+import HomeAdmin from "../views/admin/HomeAdmin";
+import ProductsAdmin from "../views/admin/ProductsAdmin";
+import UsersAdmin from "../views/admin/UsersAdmin";
+import About from "../views/About";
 
 Vue.use(VueRouter);
 
@@ -8,27 +14,55 @@ Vue.use(VueRouter);
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
+    beforeEnter (to, from, next) {
+      if(store.getters.isAdmin) {
+        next('/homeadmin');
+      } else {
+        next();
+      }
+    }
   },
   {
-    path: '/HomeAdmin',
+    path: '/homeadmin',
     name: 'HomeAdmin',
-    component: () => import('../views/admin/HomeAdmin.vue')
+    component: HomeAdmin,
+    beforeEnter (to, from, next) {
+      if(store.getters.isAdmin) {
+        next();
+      } else {
+        next('/');
+      }
+    }
   },
   {
-    path: '/ProductsAdmin',
+    path: '/productsadmin',
     name: 'ProductsAdmin',
-    component: () => import('../views/admin/ProductsAdmin.vue')
+    component: ProductsAdmin,
+    beforeEnter (to, from, next) {
+      if(store.getters.isAdmin) {
+        next();
+      } else {
+        next('/');
+      }
+    }
   },
   {
-    path: '/UsersAdmin',
+    path: '/usersadmin',
     name: 'UsersAdmin',
-    component: () => import('../views/admin/UsersAdmin.vue')
+    component: UsersAdmin,
+    beforeEnter (to, from, next) {
+      if(store.getters.isAdmin) {
+        next();
+      } else {
+        next('/');
+      }
+    }
   },
   {
-    path: '/About',
+    path: '/about',
     name: 'About',
-    component: () => import('../views/About.vue')
+    component: About
   },
   
   // {

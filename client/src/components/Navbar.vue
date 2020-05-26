@@ -10,16 +10,20 @@
       <template v-if="isAdmin">
         <v-spacer></v-spacer>
         <v-toolbar-items>
-          <v-btn text>
-            <v-icon>mdi-dolly</v-icon>
+          <v-btn text :to="{name: 'HomeAdmin'}">
+            <v-icon left>mdi-home</v-icon>
+            Inicio
+          </v-btn>
+          <v-btn text :to="{name: 'ProductsAdmin'}">
+            <v-icon left>mdi-dolly</v-icon>
             Productos
           </v-btn>
-          <v-btn text>
-            <v-icon>mdi-account-supervisor</v-icon>
+          <v-btn text :to="{name: 'UsersAdmin'}">
+            <v-icon left>mdi-account-supervisor</v-icon>
             Clientes
           </v-btn>
           <v-btn text>
-            <v-icon>mdi-truck-delivery</v-icon>
+            <v-icon left>mdi-truck-delivery</v-icon>
             Seguimiento Pedido
           </v-btn>
         </v-toolbar-items>
