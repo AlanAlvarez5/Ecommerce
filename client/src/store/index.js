@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import {API} from '../components/axios/api';
-
+import {utils} from '../components/mixins/utils'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -14,7 +14,8 @@ export default new Vuex.Store({
     account: {
       userDetails: null,
       token: null,
-    }
+    },
+    products: null
   },
   getters: {
     isAuthenticated(state) {
@@ -24,8 +25,10 @@ export default new Vuex.Store({
       return state.account.userDetails ? state.account.userDetails.admin === 1 : false;
     },
     getUserDetails(state) {
-      console.log(state.account.userDetails);
       return state.account.userDetails;
+    },
+    getAllProducts(state) {
+      return state.products;
     }
   },
   mutations: {
@@ -46,9 +49,13 @@ export default new Vuex.Store({
       setTimeout(() => {
         state.snackBar.show = false;
       }, 2500);
+    },
+    setProducts(state, payload) {
+      state.products = payload;
     }
   },
   actions: {
+    //account
     async login({commit}, authData) {
       try {
         const response = await API.post('/login', {
@@ -112,6 +119,21 @@ export default new Vuex.Store({
     },
     logout({commit}) {
       commit('logoutUser');
+    },
+    //products
+    async loadProducts({commit}) {
+      try {
+        const response = await API.get('/producto/select');
+        const host = utils.methods.getHost().concat('products/');
+        const formattedProducts = response.data.map(product => {
+          product.imagen = host + product.imagen;
+          product.descripcion = product.descripcion.split(',');
+          return product;
+        });
+        commit('setProducts', formattedProducts);
+      } catch (e) {
+        console.error(e);
+      }
     }
   },
   modules: {}

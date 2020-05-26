@@ -1,12 +1,15 @@
 <template>
   <v-card
-          class="px-2 py-2"
+          class="px-2 pb-2"
   >
     <v-container>
       <v-card-title>{{ name }}</v-card-title>
       <v-card-subtitle class="pb-0">{{ brand }}</v-card-subtitle>
     </v-container>
-    <v-row justify="center">
+    <v-row
+            style="height: 340px; width: 430px"
+            justify="center"
+    >
       <v-img
               class="white--text align-end"
               max-width="250px"
@@ -38,7 +41,7 @@
       <v-card class="fill-height">
         <v-container>
           <v-row>
-            <v-col cols="12" md="6" class="d-flex justify-center">
+            <v-col cols="12" md="6" class="d-flex justify-center" style="width: 350px; height: 500px">
               <v-img
                       max-width="350px"
                       :src="img"
@@ -145,6 +148,8 @@
         });
         this.showDialog = false;
       }
+    },
+    created() {
     }
   }
 </script>
