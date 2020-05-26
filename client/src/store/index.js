@@ -15,9 +15,10 @@ export default new Vuex.Store({
       userDetails: null,
       token: null,
     },
-    products: null
+    products: []
   },
   getters: {
+    //account
     isAuthenticated(state) {
       return state.account.token !== null;
     },
@@ -27,11 +28,13 @@ export default new Vuex.Store({
     getUserDetails(state) {
       return state.account.userDetails;
     },
+    //products
     getAllProducts(state) {
       return state.products;
     }
   },
   mutations: {
+    //account
     authUser(state, userData) {
       state.account.token = userData.token;
       state.account.userDetails = userData.userDetails;
@@ -42,6 +45,7 @@ export default new Vuex.Store({
       state.account.userDetails = null;
       state.account.token = null;
     },
+    //utils
     showSnackBar(state, payload) {
       state.snackBar.text = payload.text;
       state.snackBar.color = payload.color;
@@ -50,6 +54,7 @@ export default new Vuex.Store({
         state.snackBar.show = false;
       }, 2500);
     },
+    //products
     setProducts(state, payload) {
       state.products = payload;
     }
@@ -133,6 +138,15 @@ export default new Vuex.Store({
         commit('setProducts', formattedProducts);
       } catch (e) {
         console.error(e);
+      }
+    },
+    async addProduct({commit}, productData) {
+      try {
+        const response = await API.post('/producto/add', productData);
+        return response.data.mensaje === 'PRODUCT_ADDED';
+      } catch (e) {
+        console.error(e);
+        return false;
       }
     }
   },
