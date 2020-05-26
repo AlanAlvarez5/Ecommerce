@@ -27,7 +27,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true})); 
 
 const storage = multer.diskStorage({
-    destination: 'public/img',
+    destination: 'uploads/products',
     filename: (req , file, cb) => {
         cb(null, Date.now() + path.extname(file.originalname));
     }
@@ -35,12 +35,13 @@ const storage = multer.diskStorage({
   
 app.use(multer({
     storage,
-    dest: 'public/img',
+    dest: 'uploads/products',
     // limits: {fileSize: 1000000}
 }).single('imagen'))
 
 // Usar views
-app.use(express.static(path.join(__dirname, 'public/'))); // hostname/img/1.png
+app.use(express.static(path.join(__dirname, 'public/')));
+app.use(express.static(path.join(__dirname, 'uploads/')));
 
 // Routes
 app.use('/api', require('./routes'));

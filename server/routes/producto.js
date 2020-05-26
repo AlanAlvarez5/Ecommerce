@@ -52,6 +52,13 @@ router.get('/select/:id', async (req, res) => {
 
 router.post('/add', async (req, res) => {
     if (req.decoded.admin){
+<<<<<<< HEAD
+=======
+
+        let imagen = req.file.filename;
+        let { nombre, marca, descripcion, precio, stock} = req.body;
+
+>>>>>>> d01e4b64f5f7b41ec9d3ac4ab25516e4d631e98a
         try{
             let imagen = req.headers.host + '/img/'+ req.file.filename;
             let { nombre, marca, descripcion, precio, stock} = req.body;
