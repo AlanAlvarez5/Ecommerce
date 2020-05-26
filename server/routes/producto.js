@@ -52,15 +52,8 @@ router.get('/select/:id', async (req, res) => {
 
 router.post('/add', async (req, res) => {
     if (req.decoded.admin){
-<<<<<<< HEAD
-=======
-
-        let imagen = req.file.filename;
-        let { nombre, marca, descripcion, precio, stock} = req.body;
-
->>>>>>> d01e4b64f5f7b41ec9d3ac4ab25516e4d631e98a
         try{
-            let imagen = req.headers.host + '/img/'+ req.file.filename;
+            let imagen ='/products/'+ req.file.filename;
             let { nombre, marca, descripcion, precio, stock} = req.body;
 
             await db.query(`INSERT INTO producto (nombre, marca, descripcion, precio, stock, imagen ) VALUES ('${nombre}', '${marca}', '${descripcion}', '${precio}', '${stock}', '${imagen}')`);
@@ -84,12 +77,17 @@ router.post('/add', async (req, res) => {
 
 router.put('/edit/:id', async (req, res) => {
     if (req.decoded.admin){
-
-        let id = req.params.id;
-        let { nombre, marca, descripcion, precio, stock} = req.body;
-
         try{
-            await db.query(`UPDATE producto SET nombre = '${nombre}', marca = '${marca}', descripcion = '${descripcion}', precio = '${precio}', stock = '${stock}' where id = ${id}`);
+            let id = req.params.id;
+            let { nombre, marca, descripcion, precio, stock} = req.body;
+
+            if (req.imagen === undefined){
+                await db.query(`UPDATE producto SET nombre = '${nombre}', marca = '${marca}', descripcion = '${descripcion}', precio = '${precio}', stock = '${stock}' where id = ${id}`);
+            } else {
+                let imagen = '/products/' + req.file.filename;
+                await db.query(`UPDATE producto SET nombre = '${nombre}', marca = '${marca}', descripcion = '${descripcion}', precio = '${precio}', stock = '${stock}', imagen = '${imagen}' where id = ${id}`);
+            }
+
             res.json({
                 mensaje: 'PRODUCT_UPDATED'
             });

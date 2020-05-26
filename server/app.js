@@ -10,7 +10,6 @@ import path from 'path';
 import history from 'connect-history-api-fallback';
 // Subir imagenes
 import multer from 'multer';
-import { hostname } from 'os';
 
 
 // Asignar puerto
