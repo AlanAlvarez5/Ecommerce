@@ -53,7 +53,7 @@ router.get('/select/:id', async (req, res) => {
 router.post('/add', async (req, res) => {
     if (req.decoded.admin){
         try{
-            let imagen ='/products/'+ req.file.filename;
+            let imagen = req.file.filename;
             let { nombre, marca, descripcion, precio, stock} = req.body;
 
             await db.query(`INSERT INTO producto (nombre, marca, descripcion, precio, stock, imagen ) VALUES ('${nombre}', '${marca}', '${descripcion}', '${precio}', '${stock}', '${imagen}')`);
@@ -84,7 +84,7 @@ router.put('/edit/:id', async (req, res) => {
             if (req.imagen === undefined){
                 await db.query(`UPDATE producto SET nombre = '${nombre}', marca = '${marca}', descripcion = '${descripcion}', precio = '${precio}', stock = '${stock}' where id = ${id}`);
             } else {
-                let imagen = '/products/' + req.file.filename;
+                let imagen = req.file.filename;
                 await db.query(`UPDATE producto SET nombre = '${nombre}', marca = '${marca}', descripcion = '${descripcion}', precio = '${precio}', stock = '${stock}', imagen = '${imagen}' where id = ${id}`);
             }
 
