@@ -14,7 +14,7 @@ router.get('/select', async (req, res) => {
         return res.status(400).json({
             mensaje: 'Query Error',
             error
-        })
+        });
     }
 });
 
@@ -52,21 +52,21 @@ router.get('/select/:id', async (req, res) => {
 
 router.post('/add', async (req, res) => {
     if (req.decoded.admin){
-
-        let imagen = req.headers.host + '/img/'+ req.file.filename;
-        let { nombre, marca, descripcion, precio, stock} = req.body;
-
         try{
+            let imagen = req.headers.host + '/img/'+ req.file.filename;
+            let { nombre, marca, descripcion, precio, stock} = req.body;
+
             await db.query(`INSERT INTO producto (nombre, marca, descripcion, precio, stock, imagen ) VALUES ('${nombre}', '${marca}', '${descripcion}', '${precio}', '${stock}', '${imagen}')`);
+
             res.json({
                 mensaje: 'PRODUCT_ADDED'
-            })
+            });
         }
         catch (error){
             return res.status(400).json({
                 mensaje: 'Query Error',
                 error
-            })
+            });
         }
     } else {
         return res.status(400).json({
@@ -85,13 +85,13 @@ router.put('/edit/:id', async (req, res) => {
             await db.query(`UPDATE producto SET nombre = '${nombre}', marca = '${marca}', descripcion = '${descripcion}', precio = '${precio}', stock = '${stock}' where id = ${id}`);
             res.json({
                 mensaje: 'PRODUCT_UPDATED'
-            })
+            });
         }
         catch (error){
             return res.status(400).json({
                 mensaje: 'Query Error',
                 error
-            })
+            });
         }
     } else {
         return res.status(400).json({
