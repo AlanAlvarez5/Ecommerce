@@ -82,9 +82,6 @@
           mdi-delete
         </v-icon>
       </template>
-      <template v-slot:footer>
-        <div class="my-5"><h1></h1></div>
-      </template>
     </v-data-table>
     <v-dialog v-model="confirmDeleteDialog" max-width="300">
       <v-card>
