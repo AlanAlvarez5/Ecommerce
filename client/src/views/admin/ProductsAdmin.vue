@@ -4,6 +4,7 @@
       <p class="display-1 white--text ml-3">Lista de Productos</p>
     </v-row>
     <v-data-table
+            hide-default-footer
             :headers="headers"
             :items="getAllProducts"
             sort-by="id"
@@ -81,7 +82,21 @@
           mdi-delete
         </v-icon>
       </template>
+      <template v-slot:footer>
+        <div class="my-5"><h1></h1></div>
+      </template>
     </v-data-table>
+    <v-dialog v-model="confirmDeleteDialog" max-width="300">
+      <v-card>
+        <v-card-title class="headline">¿Estás seguro?</v-card-title>
+        <v-card-text>Si eliminas este producto esta acción no se podrá deshacer.</v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="red darken-1" text @click="confirmDeleteDialog = false">Cancelar</v-btn>
+          <v-btn color="red darken-1" text @click="confirmDelete" :loading="deleteLoading">Eliminar</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
 
@@ -90,6 +105,9 @@
 
   export default {
     data: () => ({
+      confirmDeleteDialog: false,
+      deleteId: null,
+      deleteLoading: false,
       dialog: false,
       headers: [
         {
@@ -144,10 +162,15 @@
         this.formTitle = 'Editar producto';
         this.dialog = true;
       },
-      async deleteItem(item) {
-        this.tableLoading = true;
-        await this.deleteProduct(item.id);
-        this.tableLoading = false;
+      deleteItem(item) {
+        this.deleteId = item.id;
+        this.confirmDeleteDialog = true;
+      },
+      async confirmDelete() {
+        this.deleteLoading = true;
+        await this.deleteProduct(this.deleteId);
+        this.deleteLoading = false;
+        this.confirmDeleteDialog = false;
       },
       async save() {
         const formData = this.createFormData();
