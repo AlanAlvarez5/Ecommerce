@@ -6,7 +6,13 @@
             flat
             min-height="230px"
     >
-      <v-toolbar-title>ECOMMERCE</v-toolbar-title>
+      <v-toolbar-title>
+          <router-link to="/" exact>
+            <div id="ecommerce">
+              ecommerce
+            </div>
+          </router-link>        
+      </v-toolbar-title>
       <template v-if="isAdmin">
         <v-spacer></v-spacer>
         <v-toolbar-items>
@@ -48,6 +54,9 @@
         </v-btn>
       </template>
       <AccountMenu/>
+      <v-btn text :to="{name: 'About'}">
+                  Acerca
+                </v-btn>
     </v-app-bar>
   </nav>
 </template>
@@ -75,3 +84,13 @@
     },
   }
 </script>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Leckerli+One&display=swap');
+#ecommerce {
+  font-family: 'Leckerli One', cursive;
+  font-size:2em;
+  color:white;
+}
+
+</style>
