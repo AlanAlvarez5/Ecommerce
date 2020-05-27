@@ -24,7 +24,7 @@ export default new Vuex.Store({
     },
     isAdmin(state) {
       // return state.account.userDetails ? state.account.userDetails.admin === 1 : false;
-      return false;
+      return true;
     },
     getUserDetails(state) {
       return state.account.userDetails;
