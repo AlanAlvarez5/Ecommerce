@@ -10,21 +10,36 @@
             sort-by="id"
             class="elevation-1"
             :loading="tableLoading"
+            :search="search"
     >
       <template v-slot:top>
-        <v-toolbar flat color="transparent">
-          <v-spacer></v-spacer>
-          <v-btn color="green" dark class="mb-2" @click="addItem">
-            <v-icon left>mdi-plus</v-icon>
-            Agregar producto
-          </v-btn>
+        <v-toolbar flat color="transparent" height="130px">
+          <v-row justify="space-between">
+            <v-col cols="12" md="6">
+              <v-text-field
+                      clearable
+                      v-model="search"
+                      append-icon="mdi-magnify"
+                      label="Search"
+                      single-line
+                      hide-details
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" md="4">
+              <v-row justify="end">
+                <v-btn color="green" dark class="mb-2 mr-4" @click="addItem">
+                  <v-icon left>mdi-plus</v-icon>
+                  Agregar producto
+                </v-btn>
+              </v-row>
+            </v-col>
+          </v-row>
           <v-dialog v-model="dialog" max-width="500px">
             <form enctype="multipart/form-data" @submit.prevent="save">
               <v-card class="px-3 py-2">
                 <v-card-title>
                   <span class="headline">{{ formTitle }}</span>
                 </v-card-title>
-
                 <v-card-text>
                   <v-container>
                     <v-row>
@@ -105,6 +120,7 @@
       confirmDeleteDialog: false,
       deleteId: null,
       deleteLoading: false,
+      search: '',
       dialog: false,
       headers: [
         {
