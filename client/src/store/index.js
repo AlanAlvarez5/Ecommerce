@@ -168,6 +168,20 @@ export default new Vuex.Store({
         console.error(e);
         return false;
       }
+    },
+    async editProduct({commit, dispatch}, productData) {
+      try {
+        const response = await API.put(`/producto/edit/${productData.get('id')}`, productData);
+        if(response.data.mensaje === 'PRODUCT_UPDATED') {
+          await dispatch('loadProducts');
+          return true;
+        } else{
+          return false;
+        }
+      } catch (e) {
+        console.error(e);
+        return false;
+      }
     }
   },
   modules: {}

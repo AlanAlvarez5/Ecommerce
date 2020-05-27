@@ -13,15 +13,13 @@
       <template v-slot:top>
         <v-toolbar flat color="transparent">
           <v-spacer></v-spacer>
+          <v-btn color="green" dark class="mb-2" @click="addItem">
+            <v-icon left>mdi-plus</v-icon>
+            Agregar producto
+          </v-btn>
           <v-dialog v-model="dialog" max-width="500px">
-            <template v-slot:activator="{ on }">
-              <v-btn color="green" dark class="mb-2" v-on="on">
-                <v-icon left>mdi-plus</v-icon>
-                Agregar producto
-              </v-btn>
-            </template>
             <form enctype="multipart/form-data" @submit.prevent="save">
-              <v-card>
+              <v-card class="px-3 py-2">
                 <v-card-title>
                   <span class="headline">{{ formTitle }}</span>
                 </v-card-title>
@@ -35,7 +33,8 @@
                       <v-text-field v-model="editedItem.marca" label="Marca"></v-text-field>
                     </v-row>
                     <v-row>
-                      <v-text-field v-model="editedItem.descripcion" label="Descripción" hint="Separa por comas las características del producto."></v-text-field>
+                      <v-text-field v-model="editedItem.descripcion" label="Descripción"
+                                    hint="Separa por comas las características del producto."></v-text-field>
                     </v-row>
                     <v-row>
                       <v-col class="pl-0">
@@ -52,7 +51,6 @@
                               prepend-icon="mdi-camera"
                               accept="image/png, image/jpeg, image/bmp"
                               label="Imagen del producto"
-                              ref="uploadRef"
                       ></v-file-input>
                     </v-row>
                   </v-container>
@@ -60,7 +58,7 @@
 
                 <v-card-actions>
                   <v-spacer></v-spacer>
-                  <v-btn color="blue darken-1" text @click="close">Cancelar</v-btn>
+                  <v-btn color="blue darken-1" text @click="dialog = false">Cancelar</v-btn>
                   <v-btn color="blue darken-1" text type="submit" :loading="saveLoading">Guardar</v-btn>
                 </v-card-actions>
               </v-card>
@@ -89,6 +87,7 @@
 
 <script>
   import {mapActions, mapGetters} from 'vuex';
+
   export default {
     data: () => ({
       dialog: false,
@@ -108,61 +107,71 @@
       ],
       tableLoading: false,
       saveLoading: false,
-      editedIndex: -1,
+      editMode: false,
+      formTitle: '',
       editedItem: {
         id: '',
         nombre: '',
         marca: '',
         descripcion: '',
         imagen: null,
-        precio: 0,
-        stock: 0,
+        precio: '',
+        stock: '',
       },
     }),
     computed: {
       ...mapGetters(['getAllProducts']),
-      formTitle() {
-        return this.editedIndex === -1 ? 'Nuevo producto' : 'Editar producto'
-      },
-    },
-    watch: {
-      dialog(val) {
-        val || this.close()
-      },
     },
     methods: {
-      ...mapActions(['loadProducts', 'addProduct', 'deleteProduct']),
+      ...mapActions(['loadProducts', 'addProduct', 'deleteProduct', 'editProduct']),
+      addItem() {
+        this.editedItem = {
+          id: '',
+          nombre: '',
+          marca: '',
+          descripcion: '',
+          imagen: null,
+          precio: '',
+          stock: '',
+        };
+        this.formTitle = 'Agregar producto';
+        this.dialog = true;
+      },
       editItem(item) {
-        this.editedIndex = this.productos.indexOf(item)
-        this.editedItem = Object.assign({}, item)
-        this.dialog = true
+        this.editMode = true;
+        this.editedItem = Object.assign({}, item);
+        this.editedItem.imagen = null;
+        this.formTitle = 'Editar producto';
+        this.dialog = true;
       },
       async deleteItem(item) {
         this.tableLoading = true;
         await this.deleteProduct(item.id);
         this.tableLoading = false;
       },
-      close() {
-        this.dialog = false;
-        this.editedIndex = -1;
-      },
       async save() {
-        if (this.editedIndex > -1) {
-          Object.assign(this.productos[this.editedIndex], this.editedItem)
+        const formData = this.createFormData();
+        this.saveLoading = true;
+        if (this.editMode) {
+          await this.editProduct(formData);
+          this.editMode = false;
         } else {
-          this.saveLoading = true;
-          const formData = new FormData();
-          formData.append('imagen', this.editedItem.imagen);
-          formData.append('nombre', this.editedItem.nombre);
-          formData.append('descripcion', this.editedItem.descripcion);
-          formData.append('precio', this.editedItem.precio);
-          formData.append('stock', this.editedItem.stock);
-          formData.append('marca', this.editedItem.marca);
           await this.addProduct(formData);
-          this.saveLoading = false;
         }
-        this.close()
+        this.saveLoading = false;
+        this.dialog = false;
       },
+      createFormData() {
+        const formData = new FormData();
+        formData.append('imagen', this.editedItem.imagen);
+        formData.append('id', this.editedItem.id);
+        formData.append('nombre', this.editedItem.nombre);
+        formData.append('descripcion', this.editedItem.descripcion);
+        formData.append('precio', this.editedItem.precio);
+        formData.append('stock', this.editedItem.stock);
+        formData.append('marca', this.editedItem.marca);
+        return formData;
+      }
     },
     async created() {
       this.tableLoading = true;
