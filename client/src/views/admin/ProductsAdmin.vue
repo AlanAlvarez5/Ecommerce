@@ -131,18 +131,19 @@
       },
     },
     methods: {
-      ...mapActions(['loadProducts', 'addProduct']),
+      ...mapActions(['loadProducts', 'addProduct', 'deleteProduct']),
       editItem(item) {
         this.editedIndex = this.productos.indexOf(item)
         this.editedItem = Object.assign({}, item)
         this.dialog = true
       },
-      deleteItem(item) {
-        const index = this.productos.indexOf(item)
-        confirm('¿Seguro que deseas borrar este producto?') && this.productos.splice(index, 1)
+      async deleteItem(item) {
+        this.tableLoading = true;
+        await this.deleteProduct(item.id);
+        this.tableLoading = false;
       },
       close() {
-        this.dialog = false
+        this.dialog = false;
         this.editedIndex = -1;
       },
       async save() {

@@ -23,7 +23,8 @@ export default new Vuex.Store({
       return state.account.token !== null;
     },
     isAdmin(state) {
-      return state.account.userDetails ? state.account.userDetails.admin === 1 : false;
+      // return state.account.userDetails ? state.account.userDetails.admin === 1 : false;
+      return true;
     },
     getUserDetails(state) {
       return state.account.userDetails;
@@ -140,10 +141,29 @@ export default new Vuex.Store({
         console.error(e);
       }
     },
-    async addProduct({commit}, productData) {
+    async addProduct({commit, dispatch}, productData) {
       try {
         const response = await API.post('/producto/add', productData);
-        return response.data.mensaje === 'PRODUCT_ADDED';
+        if(response.data.mensaje === 'PRODUCT_ADDED') {
+          await dispatch('loadProducts');
+          return true;
+        } else{
+          return false;
+        }
+      } catch (e) {
+        console.error(e);
+        return false;
+      }
+    },
+    async deleteProduct({commit, dispatch}, id) {
+      try {
+        const response = await API.delete(`/producto/delete/${id}`);
+        if(response.data.mensaje === 'PRODUCT_DELETED') {
+          await dispatch('loadProducts');
+          return true;
+        } else {
+          return false;
+        }
       } catch (e) {
         console.error(e);
         return false;
