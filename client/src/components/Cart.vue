@@ -6,9 +6,13 @@
   >
     <v-card class="fill-height pa-4">
       <v-container>
-        <p class="display-1 ml-3">Carrito</p>
-        <p v-if="this.cartItems.length === 0" class="headline pa-12">Tu carrito está vacío.</p>
-        <div v-else>
+        <template v-if="cartItems.length === 0">
+          <v-col class="text-center">
+            <p class="display-1 ml-3">Carrito vacío</p>
+          </v-col>
+        </template>
+        <template v-else>
+          <p class="display-1 ml-3">Carrito</p>
           <v-list three-line>
             <v-list-item
                     v-for="(item, index) in cartItems"
@@ -18,16 +22,19 @@
               <v-img :src="item.img" :alt="item.product_id" max-width="50px" class="mr-5"></v-img>
               <v-list-item-content>
                 <v-list-item-title>{{ item.name }}</v-list-item-title>
-                <v-list-item-subtitle>${{ numberWithCommas(item.price) }}.00 x {{ item.quantity }}</v-list-item-subtitle>
-                <v-list-item-subtitle>Total: ${{ numberWithCommas(item.price * item.quantity) }}.00</v-list-item-subtitle>
+                <v-list-item-subtitle>${{ numberWithCommas(item.price) }}.00 x {{ item.quantity }}
+                </v-list-item-subtitle>
+                <v-list-item-subtitle>Total: ${{ numberWithCommas(item.price * item.quantity) }}.00
+                </v-list-item-subtitle>
               </v-list-item-content>
               <v-list-item-action>
                 <v-btn icon>
-                  <v-icon 
-                          size="30" 
+                  <v-icon
+                          size="30"
                           color="red lighten-2"
                           @click="deleteItem(item.product_id)"
-                  >mdi-trash-can</v-icon>
+                  >mdi-trash-can
+                  </v-icon>
                 </v-btn>
               </v-list-item-action>
             </v-list-item>
@@ -56,7 +63,7 @@
               COMPRAR CARRITO
             </v-btn>
           </v-row>
-        </div>
+        </template>
       </v-container>
     </v-card>
   </v-bottom-sheet>
@@ -75,9 +82,9 @@
     },
     computed: {
       getTotalPrice() {
-        if(!this.cartItems) this.cartItems = [];
+        if (!this.cartItems) this.cartItems = [];
         let totalPrice = 0;
-        if(this.cartItems.length !== 0) {
+        if (this.cartItems.length !== 0) {
           this.cartItems.forEach(el => totalPrice += el.quantity * el.price);
         }
         return this.numberWithCommas(totalPrice);
@@ -88,20 +95,27 @@
         const itemIndex = this.cartItems.findIndex(el => el.product_id === productId);
         this.cartItems.splice(itemIndex, 1);
         localStorage.setItem('cart', JSON.stringify(this.cartItems));
-        if(this.cartItems.length === 0) {
+        if (this.cartItems.length === 0) {
           this.showCart = false;
         }
       },
       showCartBottomSheet() {
         const storageCart = localStorage.getItem('cart');
-        if(storageCart) {
+        if (storageCart) {
           this.cartItems = JSON.parse(storageCart);
         }
         this.showCart = true;
+        if(this.cartItems.length === 0) {
+          setTimeout(() => {
+            this.showCart = false;
+          }, 1000);
+        }
       },
       cleanCart() {
         localStorage.removeItem('cart');
-        this.cartItems = [];
+        setTimeout(() => {
+          this.cartItems = [];
+        }, 1000);
         this.showCart = false;
         this.$store.commit('showSnackBar', {
           color: 'gradient-45deg-deep-purple-blue',
@@ -113,7 +127,7 @@
 </script>
 
 <style scoped>
-  >>> .gray-rounded  {
+  >>> .gray-rounded {
     background-color: #f8f8f8;
     border-radius: 10px;
   }

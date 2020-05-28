@@ -225,7 +225,7 @@
         setTimeout(() => {
           this.registerMode = !this.registerMode;
           this.accountMenu = true;
-        },150);
+        }, 150);
       },
       async submitLoginData() {
         this.isLoggingIn = true;
@@ -288,7 +288,17 @@
           color: 'gradient-45deg-deep-purple-blue',
           text: 'Has cerrado sesión correctamente.'
         });
+        this.$router.push('/');
       }
+    },
+    created() {
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          if (this.accountMenu) {
+            this.registerMode ? this.submitRegisterData() : this.submitLoginData();
+          }
+        }
+      });
     }
   }
 </script>

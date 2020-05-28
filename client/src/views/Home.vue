@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container v-if="!isAdmin">
     <v-row>
       <p class="display-1 white--text ml-3">Catálogo de productos</p>
     </v-row>
@@ -17,11 +17,15 @@
       </v-col>
     </v-row>
   </v-container>
+  <v-container v-else>
+    <HomeAdmin/>
+  </v-container>
 </template>
 
 <script>
   import {mapActions, mapGetters} from 'vuex';
   import ProductCard from "../components/Product";
+  import HomeAdmin from "./admin/HomeAdmin";
 
   export default {
     data() {
@@ -30,13 +34,14 @@
       }
     },
     computed: {
-      ...mapGetters(['getAllProducts'])
+      ...mapGetters(['getAllProducts', 'isAdmin'])
     },
     methods: {
       ...mapActions(['loadProducts'])
     },
     components: {
-      ProductCard
+      ProductCard,
+      HomeAdmin
     },
     async created() {
       this.loadProducts();

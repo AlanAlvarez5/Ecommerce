@@ -55,3 +55,8 @@ create table if not exists detalle(
         on delete cascade
         on update cascade
 )ENGINE = INNODB;
+SELECT * FROM usuario;
+INSERT into usuario (nombre, correo, password, telefono, direccion, cp, ciudad, admin) values ('Admin', 'admin', '$2a$12$z2/W.cxYLdM90bUe900cbObRBJuWKMs8jRklZdomlvDlodCCKEt/m', '213123', 'asdsad', '123213', 'Irapuato', 1);
+INSERT into usuario (nombre, correo, password, telefono, direccion, cp, ciudad, admin) values ('Pedro', 'pedro@mail.com', '$2a$12$z2/W.cxYLdM90bUe900cbObRBJuWKMs8jRklZdomlvDlodCCKEt/m', '213123', 'asdsad', '123213', 'Irapuato', 0);
+-- INSERT INTO producto (nombre, marca, descripcion, precio, stock, imagen ) VALUES ('OnePlus 8 Pro', 'OnePlus', 'camara 99px,ram 8 gb', '15000', '2', '1590452179336.jpg');
+SELECT * FROM producto;

@@ -24,8 +24,7 @@ export default new Vuex.Store({
       return state.account.token !== null;
     },
     isAdmin(state) {
-      // return state.account.userDetails ? state.account.userDetails.admin === 1 : false;
-      return true;
+      return state.account.userDetails ? state.account.userDetails.admin === 1 : false;
     },
     getUserDetails(state) {
       return state.account.userDetails;
@@ -44,10 +43,12 @@ export default new Vuex.Store({
     authUser(state, userData) {
       state.account.token = userData.token;
       state.account.userDetails = userData.userDetails;
+      API.defaults.headers.Authorization = 'Bearer ' + userData.token;
     },
     logoutUser(state) {
       localStorage.removeItem('token');
       localStorage.removeItem('userDetails');
+      delete API.defaults.headers.Authorization;
       state.account.userDetails = null;
       state.account.token = null;
     },

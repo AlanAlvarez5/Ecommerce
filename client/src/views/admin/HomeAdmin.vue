@@ -1,9 +1,5 @@
 <template>
-    <v-container>
-        <div>
-        <p class="display-1 white--text ml-3">Bienvenido Administrador</p>
-        </div>
-    </v-container>
+    <p class="display-1 white--text">Bienvenido Administrador</p>
 </template>
 
 <script>

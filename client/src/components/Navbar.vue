@@ -16,15 +16,15 @@
       <template v-if="isAdmin">
         <v-spacer></v-spacer>
         <v-toolbar-items>
-          <v-btn text :to="{name: 'HomeAdmin'}">
+          <v-btn text to="/">
             <v-icon left>mdi-home</v-icon>
             Inicio
           </v-btn>
-          <v-btn text :to="{name: 'ProductsAdmin'}">
+          <v-btn text to="/productsadmin">
             <v-icon left>mdi-dolly</v-icon>
             Productos
           </v-btn>
-          <v-btn text :to="{name: 'UsersAdmin'}">
+          <v-btn text to="/usersadmin">
             <v-icon left>mdi-account-supervisor</v-icon>
             Clientes
           </v-btn>
@@ -34,17 +34,18 @@
           </v-btn>
         </v-toolbar-items>
       </template>
-      <template v-else>
-        <v-text-field
-                solo
-                flat
-                label="Buscar"
-                prepend-inner-icon="mdi-magnify"
-                clearable
-                background-color="gradient-45deg-indigo-purple-non"
-                class="mt-7 mx-5"
-        ></v-text-field>
-        <v-btn
+      <template>
+        <v-spacer></v-spacer>
+<!--        <v-text-field-->
+<!--                solo-->
+<!--                flat-->
+<!--                label="Buscar"-->
+<!--                prepend-inner-icon="mdi-magnify"-->
+<!--                clearable-->
+<!--                background-color="gradient-45deg-indigo-purple-non"-->
+<!--                class="mt-7 mx-5"-->
+<!--        ></v-text-field>-->
+        <v-btn v-if="!isAdmin"
                 @click="showCart"
                 icon
                 class="ml-2"
@@ -54,9 +55,6 @@
         </v-btn>
       </template>
       <AccountMenu/>
-      <v-btn text :to="{name: 'About'}">
-                  Acerca
-                </v-btn>
     </v-app-bar>
   </nav>
 </template>
