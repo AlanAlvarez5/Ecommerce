@@ -71,7 +71,21 @@ router.get('/select/:id', async(req, res) => {
     }
 });
 
-
+router.put('/edit/:id', async(req, res) => {
+    try {
+        let id = req.params.id
+        let { total, estado } = req.body
+        let record = await db.query(`UPDATE compra SET total = ${total}, estado = '${estado}' where id = ${id}`)
+        res.json({
+            mensaje: 'COMPRA_UPDATED'
+        })
+    } catch (error) {
+        res.status(400).json({
+            mensaje: 'Query Error',
+            error
+        });
+    }
+});
 
 
 module.exports = router;
