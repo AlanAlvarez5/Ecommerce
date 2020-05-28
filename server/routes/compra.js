@@ -87,5 +87,19 @@ router.put('/edit/:id', async(req, res) => {
     }
 });
 
+router.delete('/delete/:id', async(req, res) => {
+    try {
+        let id = req.params.id
+        let record = await db.query(`DELETE from compra where id = ${id}`)
+        res.json({
+            mensaje: 'COMPRA_DELETED'
+        })
+    } catch (error) {
+        res.status(400).json({
+            mensaje: 'Query Error',
+            error
+        })
+    }
+});
 
 module.exports = router;
