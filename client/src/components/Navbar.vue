@@ -45,7 +45,7 @@
 <!--                background-color="gradient-45deg-indigo-purple-non"-->
 <!--                class="mt-7 mx-5"-->
 <!--        ></v-text-field>-->
-        <v-btn
+        <v-btn v-if="!isAdmin"
                 @click="showCart"
                 icon
                 class="ml-2"

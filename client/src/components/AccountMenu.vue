@@ -288,6 +288,7 @@
           color: 'gradient-45deg-deep-purple-blue',
           text: 'Has cerrado sesión correctamente.'
         });
+        this.$router.push('/');
       }
     },
     created() {

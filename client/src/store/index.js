@@ -43,6 +43,7 @@ export default new Vuex.Store({
     logoutUser(state) {
       localStorage.removeItem('token');
       localStorage.removeItem('userDetails');
+      delete API.defaults.headers.Authorization;
       state.account.userDetails = null;
       state.account.token = null;
     },
