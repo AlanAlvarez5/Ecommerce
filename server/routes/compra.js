@@ -2,30 +2,29 @@ import express from 'express';
 import jwt from 'jsonwebtoken';
 const router = express.Router();
 
-// router.use((req, res, next) => {
-//     if (req.headers.authorization) {
-//         const token = req.headers.authorization.split(' ')[1];
-//         jwt.verify(token, req.app.get('llave'), (err, decoded) => {
-//             if (err) {
-//                 return res.json({ mensaje: 'Token invalido' });
-//             } else {
-//                 req.decoded = decoded;
-//                 next();
-//             }
-//         });
-//     } else {
-//         res.send({
-//             mensaje: 'Token no enviado'
-//         });
-//     }
-// });
+router.use((req, res, next) => {
+    if (req.headers.authorization) {
+        const token = req.headers.authorization.split(' ')[1];
+        jwt.verify(token, req.app.get('llave'), (err, decoded) => {
+            if (err) {
+                return res.json({ mensaje: 'Token invalido' });
+            } else {
+                req.decoded = decoded;
+                next();
+            }
+        });
+    } else {
+        res.send({
+            mensaje: 'Token no enviado'
+        });
+    }
+});
 
 const db = require('../db');
 
-router.get('/add', async(req, res) => {
+router.post('/add', async(req, res) => {
     try {
-        usuario_id = req.decoded.id
-            // let usuario_id = 3
+        let usuario_id = req.decoded.id
         let total = 0.0
         let estado = 'Proceso'
 
@@ -44,8 +43,7 @@ router.get('/add', async(req, res) => {
 
 router.get('/select', async(req, res) => {
     try {
-        // let usuario_id = req.recoded.id;
-        let usuario_id = 1;
+        let usuario_id = req.recoded.id;
 
         let compras = await db.query(`SELECT * from compra where usuario_id = ${usuario_id}`);
         res.json(compras);
@@ -60,7 +58,6 @@ router.get('/select', async(req, res) => {
 router.get('/select/:id', async(req, res) => {
     try {
         let id = req.params.id;
-        // let id = 6;
         let record = await db.query(`SELECT * from compra where id = ${id}`);
         res.json(record);
     } catch (error) {
@@ -88,17 +85,23 @@ router.put('/edit/:id', async(req, res) => {
 });
 
 router.delete('/delete/:id', async(req, res) => {
-    try {
-        let id = req.params.id
-        let record = await db.query(`DELETE from compra where id = ${id}`)
-        res.json({
-            mensaje: 'COMPRA_DELETED'
-        })
-    } catch (error) {
-        res.status(400).json({
-            mensaje: 'Query Error',
-            error
-        })
+    if (req.decoded.admin) {
+        try {
+            let id = req.params.id
+            let record = await db.query(`DELETE from compra where id = ${id}`)
+            res.json({
+                mensaje: 'COMPRA_DELETED'
+            })
+        } catch (error) {
+            res.status(400).json({
+                mensaje: 'Query Error',
+                error
+            })
+        }
+    } else {
+        return res.status(400).json({
+            mensaje: 'No permitido'
+        });
     }
 });
 
