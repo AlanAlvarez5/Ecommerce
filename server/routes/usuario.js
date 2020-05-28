@@ -64,7 +64,7 @@ router.get('/select/:id', async(req, res) => {
     
 });
 
-router.get('/add', async (req, res) => {
+router.post('/add', async (req, res) => {
     if (req.decoded.admin){
         let { nombre, correo, password, telefono, direccion, cp, ciudad, admin } = req.body;
     

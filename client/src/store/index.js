@@ -9,13 +9,14 @@ export default new Vuex.Store({
     snackBar: {
       text: null,
       color: null,
-      show: false
+      show: false,
     },
     account: {
       userDetails: null,
       token: null,
     },
-    products: []
+    products: [],
+    users: []
   },
   getters: {
     //account
@@ -32,6 +33,10 @@ export default new Vuex.Store({
     //products
     getAllProducts(state) {
       return state.products;
+    },
+    //users
+    getAllUsers(state) {
+      return state.users;
     }
   },
   mutations: {
@@ -58,6 +63,10 @@ export default new Vuex.Store({
     //products
     setProducts(state, payload) {
       state.products = payload;
+    },
+    //users
+    setUsers(state, payload) {
+      state.users = payload;
     }
   },
   actions: {
@@ -182,7 +191,68 @@ export default new Vuex.Store({
         console.error(e);
         return false;
       }
-    }
+    },
+    //users
+    async loadUsers({commit}) {
+      try {
+        const response = await API.get('/usuario/select');
+        commit('setUsers', response.data);
+      } catch (e) {
+        console.error(e);
+      }
+    },
+    //users
+    async addUser({commit, dispatch}, userData) {
+      try {
+        const response = await API.post('/usuario/add', userData);
+        if(response.data.mensaje === 'USER_REGISTERED') {
+          await dispatch('loadUsers');
+          return true;
+        } else{
+          return false;
+        }
+      } catch (e) {
+        console.error(e);
+        return false;
+      }
+    },
+    async deleteUser({commit, dispatch}, id) {
+      try {
+        const response = await API.delete(`/usuario/delete/${id}`);
+        if(response.data.mensaje === 'USER_DELETED') {
+          await dispatch('loadUsers');
+          return true;
+        } else {
+          return false;
+        }
+      } catch (e) {
+        console.error(e);
+        return false;
+      }
+    },
+    async editUser({commit, dispatch}, userData) {
+      try {
+        const response = await API.put(`/usuario/edit/${userData.get('id')}`, userData);
+        if(response.data.mensaje === 'USER_MODIFIED') {
+          await dispatch('loadUsers');
+          return true;
+        } else{
+          return false;
+        }
+      } catch (e) {
+        console.error(e);
+        return false;
+      }
+    },
+    async loadUsers({commit}) {
+      try {
+        const response = await API.get('/usuario/select');
+        commit('setUsers', response.data);
+      } catch (e) {
+        console.error(e);
+      }
+    },
   },
+
   modules: {}
 })
