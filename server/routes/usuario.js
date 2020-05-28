@@ -67,20 +67,26 @@ router.get('/select/:id', async(req, res) => {
 router.post('/add', async (req, res) => {
     if (req.decoded.admin){
         let { nombre, correo, password, telefono, direccion, cp, ciudad, admin } = req.body;
-    
-        const {salt_rounds} = require('../keys');
-        const hashed  = bcrypt.hashSync(password, salt_rounds);
 
         try{
-            let record = await db.query(`INSERT into usuario (nombre, correo, password, telefono, direccion, cp, ciudad, admin) values ('${nombre}', '${correo}', '${hashed}', '${telefono}', '${direccion}', '${cp}', '${ciudad}', ${admin} )`)
-    
-            let usuario = await db.query(`SELECT * from usuario where id = ${record.insertId}`)
-    
-            res.json({
-                mensaje: 'USER_REGISTERED',
-                usuario,
-            });
-            
+
+            let is_registered = await db.query(`SELECT * from usuario where correo = '${correo}'`)
+            if (is_registered.length > 0){
+                res.json({
+                    mensaje: 'USER_ALREADY_REGISTERED'
+                });
+            }else{
+                const {salt_rounds} = require('../keys');
+                const hashed  = bcrypt.hashSync(password, salt_rounds);
+                let record = await db.query(`INSERT into usuario (nombre, correo, password, telefono, direccion, cp, ciudad, admin) values ('${nombre}', '${correo}', '${hashed}', '${telefono}', '${direccion}', '${cp}', '${ciudad}', ${admin} )`)
+        
+                let usuario = await db.query(`SELECT * from usuario where id = ${record.insertId}`)
+        
+                res.json({
+                    mensaje: 'USER_REGISTERED',
+                    usuario,
+                });
+            }
         } catch (error) {
             return res.status(400).json({
                 mensaje: 'Query Error',
