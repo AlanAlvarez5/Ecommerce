@@ -50,7 +50,7 @@
                     </v-row>
                     <v-row>
                       <v-col class="pl-0">
-                          <v-text-field v-model="editedItem.password" label="Password"></v-text-field>
+                          <v-text-field :type="'password'" v-model="editedItem.password" label="Password"></v-text-field>
                         </v-col>
                         <v-col class="pr-0">
                           <v-text-field v-model="editedItem.telefono" label="Teléfono"></v-text-field>
@@ -133,7 +133,6 @@
         },
         { text: 'Nombre', value: 'nombre' },
         { text: 'Correo', value: 'correo' },
-        { text: 'Password', value: 'password' },
         { text: 'Teléfono', value: 'telefono'},
         { text: 'Dirección', value: 'direccion'},
         { text: 'CP', value: 'cp'},
