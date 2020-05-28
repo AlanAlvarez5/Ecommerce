@@ -225,7 +225,7 @@
         setTimeout(() => {
           this.registerMode = !this.registerMode;
           this.accountMenu = true;
-        },150);
+        }, 150);
       },
       async submitLoginData() {
         this.isLoggingIn = true;
@@ -289,6 +289,15 @@
           text: 'Has cerrado sesión correctamente.'
         });
       }
+    },
+    created() {
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          if (this.accountMenu) {
+            this.registerMode ? this.submitRegisterData() : this.submitLoginData();
+          }
+        }
+      });
     }
   }
 </script>

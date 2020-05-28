@@ -16,15 +16,15 @@
       <template v-if="isAdmin">
         <v-spacer></v-spacer>
         <v-toolbar-items>
-          <v-btn text :to="{name: 'HomeAdmin'}">
+          <v-btn text to="/">
             <v-icon left>mdi-home</v-icon>
             Inicio
           </v-btn>
-          <v-btn text :to="{name: 'ProductsAdmin'}">
+          <v-btn text to="/productsadmin">
             <v-icon left>mdi-dolly</v-icon>
             Productos
           </v-btn>
-          <v-btn text :to="{name: 'UsersAdmin'}">
+          <v-btn text to="/usersadmin">
             <v-icon left>mdi-account-supervisor</v-icon>
             Clientes
           </v-btn>
@@ -54,7 +54,7 @@
         </v-btn>
       </template>
       <AccountMenu/>
-      <v-btn text :to="{name: 'About'}">
+      <v-btn text to="/about">
                   Acerca
                 </v-btn>
     </v-app-bar>
