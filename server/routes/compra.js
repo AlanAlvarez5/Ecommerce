@@ -105,4 +105,26 @@ router.delete('/delete/:id', async(req, res) => {
     }
 });
 
+// CRUD detalles compra
+
+router.post('/addp', async(req, res) => {
+    try {
+        let { compra_id, producto_id, cantidad } = req.body
+        let record = await db.query(`INSERT into detalle (compra_id, producto_id, cantidad) values (${compra_id}, ${producto_id}, ${cantidad})`)
+
+        res.json({
+            mensaje: 'DETAIL_ADD'
+        });
+
+    } catch (error) {
+        return res.status(400).json({
+            mensaje: 'Query Error',
+            error
+        });
+    }
+});
+
+
+
+
 module.exports = router;
