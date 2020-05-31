@@ -107,7 +107,7 @@ router.delete('/delete/:id', async(req, res) => {
 
 // CRUD detalles compra
 
-router.post('/addp', async(req, res) => {
+router.post('/addd', async(req, res) => {
     try {
         let { compra_id, producto_id, cantidad } = req.body
         let record = await db.query(`INSERT into detalle (compra_id, producto_id, cantidad) values (${compra_id}, ${producto_id}, ${cantidad})`)
@@ -124,7 +124,54 @@ router.post('/addp', async(req, res) => {
     }
 });
 
+router.get('/selectd', async(req, res) => {
+    try {
+        let { compra_id } = req.body;
 
+        let detalles = await db.query(`SELECT * from detalle where compra_id = '${compra_id}'`);
+        res.json(detalles);
+    } catch (error) {
+        return res.status(400).json({
+            mensaje: 'Query Error',
+            error
+        });
+    }
+});
 
+router.put('/editd', async(req, res) => {
+    try {
+        let { compra_id, producto_id, cantidad } = req.body
+        let record = await db.query(`UPDATE detalle SET cantidad = ${cantidad} where producto_id = ${producto_id} and compra_id = ${compra_id}`)
+        res.json({
+            mensaje: 'DETALLE_UPDATED'
+        });
+    } catch (error) {
+        res.status(400).json({
+            mensaje: 'Query Error',
+            error
+        })
+    }
+});
+
+router.delete('/deleted', async(req, res) => {
+    if (req.decoded.admin) {
+        try {
+            let { compra_id, producto_id } = req.body;
+            await db.query(`DELETE from detalle where producto_id = ${producto_id} and compra_id = ${compra_id}`);
+            res.json({
+                mensaje: 'DETALLE_DELETED'
+            });
+        } catch (error) {
+            res.status(400).json({
+                mensaje: 'Query Error',
+                error
+            })
+        }
+    } else {
+        return res.status(400).json({
+            mensaje: 'No permitido'
+        });
+    }
+});
 
 module.exports = router;
