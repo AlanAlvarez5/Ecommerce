@@ -245,14 +245,6 @@ export default new Vuex.Store({
         return false;
       }
     },
-    async loadUsers({commit}) {
-      try {
-        const response = await API.get('/usuario/select');
-        commit('setUsers', response.data);
-      } catch (e) {
-        console.error(e);
-      }
-    },
   },
 
   modules: {}
