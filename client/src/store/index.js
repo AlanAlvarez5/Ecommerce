@@ -262,6 +262,22 @@ export default new Vuex.Store({
         console.error(e);
       }
     },
+    async deleteCompra({commit, dispatch}, id) {
+      try {
+        const response = await API.delete(`/compra/delete/${id}`);
+        if(response.data.mensaje === 'COMPRA_DELETED') {
+          await dispatch('loadCompras');
+          return true;
+        } else {
+          return false;
+        }
+      } catch (e) {
+        console.error(e);
+        return false;
+      }
+    },
+
+    
   },
 
   modules: {}

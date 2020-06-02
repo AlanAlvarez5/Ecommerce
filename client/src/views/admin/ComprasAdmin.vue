@@ -117,7 +117,7 @@
       ...mapGetters(['getAllCompras']),
     },
     methods: {
-      ...mapActions(['loadCompras']),
+      ...mapActions(['loadCompras','deleteCompra']),
       addItem() {
       },
       editItem(item) {
@@ -131,12 +131,15 @@
         this.confirmDeleteDialog = true;
       },
       async confirmDelete() {
+        this.deleteLoading = true;
+        await this.deleteCompra(this.deleteId);
+        this.deleteLoading = false;
+        this.confirmDeleteDialog = false;
       },
       async save() {
 
       },
       createFormData() {
-
       }
     },
     async created() {
