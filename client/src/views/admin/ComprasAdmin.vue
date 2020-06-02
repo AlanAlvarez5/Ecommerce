@@ -35,8 +35,9 @@
                 <v-card-text>
                   <v-container>
                       <v-col class="pl-0">
-                          <v-text-field v-model="editedItem.estado" label="Estado">
-                          </v-text-field>
+                        <v-select
+                            :items="estados"
+                        ></v-select>
                       </v-col>
                   </v-container>
                 </v-card-text>
@@ -110,6 +111,7 @@
           estado: '',
 
       },
+      estados: ['Proceso','Enviado', 'Completado'],
     }),
     computed: {
       ...mapGetters(['getAllCompras']),
