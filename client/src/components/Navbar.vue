@@ -28,7 +28,7 @@
             <v-icon left>mdi-account-supervisor</v-icon>
             Clientes
           </v-btn>
-          <v-btn text>
+          <v-btn text to="/comprasadmin">
             <v-icon left>mdi-truck-delivery</v-icon>
             Seguimiento Pedido
           </v-btn>
