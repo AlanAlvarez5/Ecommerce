@@ -43,9 +43,7 @@ router.post('/add', async(req, res) => {
 
 router.get('/select', async(req, res) => {
     try {
-        let usuario_id = req.recoded.id;
-
-        let compras = await db.query(`SELECT * from compra where usuario_id = ${usuario_id}`);
+        let compras = await db.query(`SELECT * from compra`);
         res.json(compras);
     } catch (error) {
         return res.status(400).json({
