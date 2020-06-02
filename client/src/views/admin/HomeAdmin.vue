@@ -6,14 +6,26 @@
                 la función de ecommerce
             </div>
         </v-container>
-        <v-carousel height="300" :show-arrows="false" :cycle="true" hide-delimiter-background delimiter-icon="mdi-minus">
+        <v-carousel height="300" :show-arrows="true" :cycle="true" hide-delimiter-background delimiter-icon="mdi-minus">
             <v-carousel-item
                 v-for="(item,i) in items"
                 :key="i"
                 :src="item.src">
             </v-carousel-item>
         </v-carousel>
-    </v-container>     
+        <div class="mt-10">
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque, et rem tempore deserunt sequi aut quo dolorum dolor officia impedit similique! Corrupti voluptatem repellat totam perferendis facere nulla non incidunt.
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Placeat assumenda eaque doloribus sunt quia quos corporis dolor modi quis eius. Accusantium quibusdam esse quaerat voluptate. Perferendis doloribus animi ea necessitatibus.
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit itaque incidunt harum enim nemo velit eaque quam in, rerum maiores voluptate libero quibusdam similique maxime nam veritatis voluptas. Quasi, illum!
+          </p>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque, et rem tempore deserunt sequi aut quo dolorum dolor officia impedit similique! Corrupti voluptatem repellat totam perferendis facere nulla non incidunt.
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Placeat assumenda eaque doloribus sunt quia quos corporis dolor modi quis eius. Accusantium quibusdam esse quaerat voluptate. Perferendis doloribus animi ea necessitatibus.
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit itaque incidunt harum enim nemo velit eaque quam in, rerum maiores voluptate libero quibusdam similique maxime nam veritatis voluptas. Quasi, illum!
+          </p>
+        </div>
+    </v-container>   
 </template>
 
 <script>
@@ -40,7 +52,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Leckerli+One&display=swap');
 .ecommerce {
   font-family: 'Leckerli One', cursive;
-  font-size:5em;
+  font-size:3.5rem;
   color:black;
 }
 

@@ -17,7 +17,7 @@
                     class="mx-auto"
                     max-width="475">
                         <v-img
-                            src="https://zonafranca.mx/wp-content/uploads/2018/08/photo_2018-08-14_15-44-27.jpg"
+                            src="https://www.ugto.mx/noticias/images/noticias/23-08-16/division-de-ingienierias-ug-ugto-universidad-de-guanajuato.jpg"
                             style="width:auto;height:auto;"
                             aspect-ratio="2.75"
                         ></v-img>
@@ -34,15 +34,24 @@
                     class="mx-auto"
                     max-width="475">
                         <v-img
-                            src="https://st4.depositphotos.com/12985790/22094/i/450/depositphotos_220944996-stock-photo-side-view-female-call-center.jpg"
+                            src="https://s3.amazonaws.com/wordpress-production/wp-content/uploads/sites/19/2016/12/conseguir-trabajo-atencion-cliente-cualidades-necesitas.jpg"
                             style="width:auto;height:auto;"
                             aspect-ratio="2.75"
                         ></v-img>
                         <v-card-title primary-title>
                             <div style="font-size:1rem;">
                                 <h3 class="headline mb-0">  <v-icon>mdi-phone</v-icon> Horario de Atención</h3>
-                                Teléfono: 52(464)378-90-97
-                                 **Horario de atención de 9:00 am a 6:00 pm de Lunes a Viernes.
+                                <ul>
+                                    <li>
+                                        Teléfono: 52(464)378-90-97
+                                    </li>
+                                    <li>
+                                        Lunes a Viernes
+                                    </li>
+                                    <li>
+                                        Horario de 9:00 a 18:00 hrs
+                                    </li>
+                                </ul>
                                 <p><v-icon>mdi-email</v-icon> Correo Eléctronico: atencioncliente@ecommerce.com</p>
                             </div>
                         </v-card-title>
