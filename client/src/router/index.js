@@ -5,6 +5,7 @@ import store from '../store/index'
 import Home from "../views/Home";
 import ProductsAdmin from "../views/admin/ProductsAdmin";
 import UsersAdmin from "../views/admin/UsersAdmin";
+import ComprasAdmin from "../views/admin/ComprasAdmin";
 import About from "../views/About";
 
 Vue.use(VueRouter);
@@ -31,6 +32,18 @@ Vue.use(VueRouter);
     path: '/usersadmin',
     name: 'UsersAdmin',
     component: UsersAdmin,
+    beforeEnter (to, from, next) {
+      if(store.getters.isAdmin) {
+        next();
+      } else {
+        next('/');
+      }
+    }
+  },
+  {
+    path: '/comprasadmin',
+    name: 'ComprasAdmin',
+    component: ComprasAdmin,
     beforeEnter (to, from, next) {
       if(store.getters.isAdmin) {
         next();
