@@ -16,7 +16,8 @@ export default new Vuex.Store({
       token: null,
     },
     products: [],
-    users: []
+    users: [],
+    compras: [],
   },
   getters: {
     //account
@@ -36,6 +37,10 @@ export default new Vuex.Store({
     //users
     getAllUsers(state) {
       return state.users;
+    },
+    //compras
+    getAllCompras(state) {
+      return state.compras;
     }
   },
   mutations: {
@@ -68,6 +73,10 @@ export default new Vuex.Store({
     //users
     setUsers(state, payload) {
       state.users = payload;
+    },
+    //users
+    setCompras(state, payload) {
+      state.compras = payload;
     }
   },
   actions: {
@@ -202,7 +211,6 @@ export default new Vuex.Store({
         console.error(e);
       }
     },
-    //users
     async addUser({commit, dispatch}, userData) {
       try {
         const response = await API.post('/usuario/add', userData);
@@ -243,6 +251,15 @@ export default new Vuex.Store({
       } catch (e) {
         console.error(e);
         return false;
+      }
+    },
+    //compras
+    async loadCompras({commit}) {
+      try {
+        const response = await API.get('/compra/select');
+        commit('setCompras', response.data);
+      } catch (e) {
+        console.error(e);
       }
     },
   },

@@ -112,16 +112,16 @@
       },
     }),
     computed: {
-      ...mapGetters([]),
+      ...mapGetters(['getAllCompras']),
     },
     methods: {
-      ...mapActions([]),
+      ...mapActions(['loadCompras']),
       addItem() {
       },
       editItem(item) {
         this.editMode = true;
         this.editedItem = Object.assign({}, item);
-        this.formTitle = 'Compra';
+        this.formTitle = 'Editar Estado Compra';
         this.dialog = true;
       },
       deleteItem(item) {
@@ -138,7 +138,9 @@
       }
     },
     async created() {
-
+      this.tableLoading = true;
+      await this.loadCompras();
+      this.tableLoading = false;
     }
   }
 </script>
