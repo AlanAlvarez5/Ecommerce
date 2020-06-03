@@ -164,7 +164,8 @@ router.get('/select-detail/:id', async(req, res) => {
     const id = req.params.id;
     try {
         // Hacer join con la información de los productos
-        let detalles = await db.query(`SELECT * from detalle where compra_id = '${id}'`);
+        // let detalles = await db.query(`SELECT * from detalle where compra_id = '${id}'`);
+        let detalles = await db.query(`SELECT detalle.cantidad, producto.nombre, producto.marca, producto.precio, producto.imagen FROM detalle JOIN producto ON producto.id = detalle.producto_id and detalle.compra_id = '${id}'`);
         res.json(detalles);
     } catch (error) {
         return res.status(400).json({
