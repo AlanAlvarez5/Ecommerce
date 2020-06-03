@@ -36,11 +36,16 @@
                   <span class="headline">{{ formTitle }}</span>
                 </v-card-title>
                 <v-card-text>
-                  <v-container>
+                  <v-container v-if="editMode">
                       <v-col class="pl-0">
                         <v-select v-model="editedItem.estado" label="Estado"
                             :items="estados"
                         ></v-select>
+                      </v-col>
+                  </v-container>
+                  <v-container v-else-if="showDetails">
+                      <v-col class="pl-0">
+                        <p>AQUI VAN TODOS LOS DETALLES DE LA COMPRA SELECCIONADA</p>
                       </v-col>
                   </v-container>
                 </v-card-text>
@@ -55,6 +60,13 @@
         </v-toolbar>
       </template>
       <template v-slot:item.actions="{ item }">
+        <v-icon
+          small
+          class="mr-2"
+          @click="showItem(item)"
+        >
+          mdi-eye
+        </v-icon>
         <v-icon
           small
           class="mr-2"
@@ -109,6 +121,7 @@
       tableLoading: false,
       saveLoading: false,
       editMode: false,
+      showDetails: false,
       formTitle: '',
       editedItem: {
           id: '',
@@ -126,7 +139,14 @@
         else  return 'green'
       },
       ...mapActions(['loadCompras','deleteCompra','editCompra']),
+      showItem(item) {
+        this.editMode = false;
+        this.showDetails = true;
+        this.formTitle = 'Detalle de Compra';
+        this.dialog = true;
+      },
       editItem(item) {
+        this.showDetails = false;
         this.editMode = true;
         this.editedItem = Object.assign({}, item);
         this.formTitle = 'Editar Estado Compra';
