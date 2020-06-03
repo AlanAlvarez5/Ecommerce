@@ -35,7 +35,7 @@
                 <v-card-text>
                   <v-container>
                       <v-col class="pl-0">
-                        <v-select
+                        <v-select v-model="editedItem.estado" label="Estado"
                             :items="estados"
                         ></v-select>
                       </v-col>
@@ -108,8 +108,8 @@
       editMode: false,
       formTitle: '',
       editedItem: {
+          id: '',
           estado: '',
-
       },
       estados: ['Proceso','Enviado', 'Completado'],
     }),
@@ -117,9 +117,7 @@
       ...mapGetters(['getAllCompras']),
     },
     methods: {
-      ...mapActions(['loadCompras','deleteCompra']),
-      addItem() {
-      },
+      ...mapActions(['loadCompras','deleteCompra','editCompra']),
       editItem(item) {
         this.editMode = true;
         this.editedItem = Object.assign({}, item);
@@ -137,9 +135,20 @@
         this.confirmDeleteDialog = false;
       },
       async save() {
-
+        const formData = this.createFormData();
+        this.saveLoading = true;
+        if (this.editMode) {
+          await this.editCompra(formData);
+          this.editMode = false;
+        }
+        this.saveLoading = false;
+        this.dialog = false;
       },
       createFormData() {
+        const formData = new FormData();
+        formData.append('id', this.editedItem.id);
+        formData.append('estado', this.editedItem.estado);
+        return formData;
       }
     },
     async created() {

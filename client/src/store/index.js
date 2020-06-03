@@ -276,6 +276,20 @@ export default new Vuex.Store({
         return false;
       }
     },
+    async editCompra({commit, dispatch}, compraData) {
+      try {
+        const response = await API.put(`/compra/edit/${compraData.get('id')}`, compraData);
+        if(response.data.mensaje === 'COMPRA_UPDATED') {
+          await dispatch('loadCompras');
+          return true;
+        } else{
+          return false;
+        }
+      } catch (e) {
+        console.error(e);
+        return false;
+      }
+    },
 
     
   },
