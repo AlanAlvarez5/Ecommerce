@@ -25,8 +25,8 @@ const db = require('../db');
 router.post('/add', async(req, res) => {
     if (!req.decoded.admin) {
         try {
+            let total = req.body.total
             let usuario_id = req.decoded.id
-            let total = 0.0
             let estado = 'Proceso'
 
             let record = await db.query(`INSERT into compra (usuario_id, total, estado) values (${usuario_id}, ${total}, '${estado}')`)
