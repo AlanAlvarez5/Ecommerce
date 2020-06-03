@@ -18,6 +18,7 @@ export default new Vuex.Store({
     products: [],
     users: [],
     compras: [],
+    detalles: [],
   },
   getters: {
     //account
@@ -41,7 +42,11 @@ export default new Vuex.Store({
     //compras
     getAllCompras(state) {
       return state.compras;
-    }
+    },
+    //detalle compras
+    getAllDetallesFromCompra(state) {
+      return state.detalles;
+    },
   },
   mutations: {
     //account
@@ -77,6 +82,10 @@ export default new Vuex.Store({
     //users
     setCompras(state, payload) {
       state.compras = payload;
+    },
+    //users
+    setDetalles(state, payload) {
+      state.detalles = payload;
     }
   },
   actions: {
@@ -288,6 +297,15 @@ export default new Vuex.Store({
       } catch (e) {
         console.error(e);
         return false;
+      }
+    },
+    //detalle compras
+    async loadDetalleCompra({commit, dispatch},id) {
+      try {
+        const response = await API.get(`/compra/select-detail/${id}`);
+        commit('setDetalles', response.data);
+      } catch (e) {
+        console.error(e);
       }
     },
 
