@@ -46,13 +46,26 @@
                   <v-container v-else-if="showDetails">
                       <v-col class="pl-0">
                         <p>AQUI VAN TODOS LOS DETALLES DE LA COMPRA SELECCIONADA</p>
+                        <v-data-table
+                          hide-default-footer
+                          :headers="detailHeaders"
+                          :items="getAllDetallesFromCompra" 
+                          sort-by="product_id"
+                          class="elevation-1"
+                          :loading="tableLoading"
+                          :search="search"
+                        ></v-data-table>
                       </v-col>
                   </v-container>
                 </v-card-text>
-                <v-card-actions>
+                <v-card-actions  v-if="editMode">
                   <v-spacer></v-spacer>
                   <v-btn color="blue darken-1" text @click="dialog = false">Cancelar</v-btn>
                   <v-btn color="blue darken-1" text type="submit" :loading="saveLoading">Guardar</v-btn>
+                </v-card-actions>
+                <v-card-actions  v-else-if="showDetails">
+                  <v-spacer></v-spacer>
+                  <v-btn color="blue darken-1" text @click="dialog = false">Volver</v-btn>
                 </v-card-actions>
              </v-card>
             </form>
@@ -102,6 +115,7 @@
     data: () => ({
       dialog: false,
       confirmDeleteDialog: false,
+      showCompraId: null,
       deleteId: null,
       deleteLoading: false,
       search: '',
@@ -118,6 +132,18 @@
         { text: 'Estado', value: 'estado'},
         { text: 'Acciones', value: 'actions', sortable: false },
       ],
+      detailHeaders: [
+        {
+          text: 'Id Producto',
+          align: 'start',
+          sortable: false,
+          value: 'producto_id',
+        },
+        { text: 'Cantidad', value: 'cantidad' },
+        { text: 'Nombre', value: 'nombre' },
+        { text: 'Marca', value: 'marca' },
+        { text: 'Precio', value: 'precio' },
+      ],
       tableLoading: false,
       saveLoading: false,
       editMode: false,
@@ -130,7 +156,7 @@
       estados: ['Proceso','Enviado', 'Completado'],
     }),
     computed: {
-      ...mapGetters(['getAllCompras']),
+      ...mapGetters(['getAllCompras','getAllDetallesFromCompra']),
     },
     methods: {
       getColor (estado){
@@ -138,13 +164,7 @@
         else if (estado == 'Enviado') return 'blue'
         else  return 'green'
       },
-      ...mapActions(['loadCompras','deleteCompra','editCompra']),
-      showItem(item) {
-        this.editMode = false;
-        this.showDetails = true;
-        this.formTitle = 'Detalle de Compra';
-        this.dialog = true;
-      },
+      ...mapActions(['loadCompras','deleteCompra','editCompra','loadDetalleCompra']),
       editItem(item) {
         this.showDetails = false;
         this.editMode = true;
@@ -155,6 +175,14 @@
       deleteItem(item) {
         this.deleteId = item.id;
         this.confirmDeleteDialog = true;
+      },
+      async showItem(item) {
+        this.showCompraId = item.id
+        this.editMode = false;
+        this.showDetails = true;
+        await this.loadDetalleCompra(this.showCompraId);
+        this.formTitle = 'Detalle de Compra';
+        this.dialog = true;
       },
       async confirmDelete() {
         this.deleteLoading = true;
