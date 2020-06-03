@@ -12,6 +12,9 @@
             :loading="tableLoading"
             :search="search"
     >
+      <template v-slot:item.estado="{ item }">
+        <v-chip :color="getColor(item.estado)" dark>{{ item.estado }}</v-chip>
+      </template>
       <template v-slot:top>
         <v-toolbar flat color="transparent" height="130px">
           <v-row justify="space-between">
@@ -117,6 +120,11 @@
       ...mapGetters(['getAllCompras']),
     },
     methods: {
+      getColor (estado){
+        if (estado == 'Proceso') return 'orange'
+        else if (estado == 'Enviado') return 'blue'
+        else  return 'green'
+      },
       ...mapActions(['loadCompras','deleteCompra','editCompra']),
       editItem(item) {
         this.editMode = true;
