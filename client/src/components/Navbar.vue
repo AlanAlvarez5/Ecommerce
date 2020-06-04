@@ -34,6 +34,15 @@
           </v-btn>
         </v-toolbar-items>
       </template>
+      <template v-if="isAuthenticated && !isAdmin" >
+        <v-spacer></v-spacer>
+        <v-toolbar-items>
+          <v-btn text to="/comprasuser">
+            <v-icon left>mdi-shopping</v-icon>
+            Mis Compras
+          </v-btn>
+        </v-toolbar-items>
+      </template>
       <template>
         <v-spacer></v-spacer>
 <!--        <v-text-field-->
@@ -75,7 +84,7 @@
     }),
     computed: {
       ...mapGetters([
-        'isAdmin'
+        'isAdmin','isAuthenticated'
       ])
     },
     methods: {
