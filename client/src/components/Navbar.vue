@@ -34,15 +34,6 @@
           </v-btn>
         </v-toolbar-items>
       </template>
-      <template v-if="isAuthenticated && !isAdmin" >
-        <v-spacer></v-spacer>
-        <v-toolbar-items>
-          <v-btn text to="/comprasuser">
-            <v-icon left>mdi-shopping</v-icon>
-            Mis Compras
-          </v-btn>
-        </v-toolbar-items>
-      </template>
       <template>
         <v-spacer></v-spacer>
 <!--        <v-text-field-->
@@ -68,6 +59,19 @@
           </v-tooltip>
 
           <Cart ref="appCart"/>
+        </v-btn>
+        <v-btn v-if="!isAdmin && isAuthenticated"
+                to="/comprasuser"
+                icon
+                class="ml-2"
+        >
+        
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on }">
+              <v-icon v-on="on">mdi-shopping</v-icon>
+            </template>
+            <span>Mis Compras</span>
+          </v-tooltip>
         </v-btn>
       </template>
       <AccountMenu/>
