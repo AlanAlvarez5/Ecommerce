@@ -29,12 +29,19 @@
               ></v-text-field>
             </v-col>
           </v-row>
-          <v-dialog v-model="dialog" max-width="500px">
+          <v-dialog  v-model="dialog" max-width="700px">
             <form @submit.prevent="save">
               <v-card class="px-3 py-2">
+              <v-row>
                 <v-card-title>
                   <span class="headline">{{ formTitle }}</span>
                 </v-card-title>
+                <v-spacer></v-spacer>
+                  <v-card-actions  v-if="showDetails">
+                    <v-spacer></v-spacer>
+                    <v-btn color="blue darken-1" text @click="dialog = false">Volver</v-btn>
+                  </v-card-actions>
+              </v-row>
                 <v-card-text>
                   <v-container v-if="editMode">
                       <v-col class="pl-0">
@@ -45,7 +52,6 @@
                   </v-container>
                   <v-container v-else-if="showDetails">
                       <v-col class="pl-0">
-                        <p>AQUI VAN TODOS LOS DETALLES DE LA COMPRA SELECCIONADA</p>
                         <v-data-table
                           hide-default-footer
                           :headers="detailHeaders"
@@ -56,7 +62,7 @@
                           :search="search"
                         >
                           <template v-slot:item.imagen="{ item }">
-                            <img :src=item.imagen style="width: 50px; height: 50px" />
+                            <img :src=item.imagen style="width: 100px; height: auto" />
                           </template>
                         </v-data-table>
                       </v-col>
@@ -67,10 +73,6 @@
                   <v-btn color="blue darken-1" text @click="dialog = false">Cancelar</v-btn>
                   <v-btn color="blue darken-1" text type="submit" :loading="saveLoading">Guardar</v-btn>
                 </v-card-actions>
-                <v-card-actions  v-else-if="showDetails">
-                  <v-spacer></v-spacer>
-                  <v-btn color="blue darken-1" text @click="dialog = false">Volver</v-btn>
-                </v-card-actions>
              </v-card>
             </form>
           </v-dialog>
@@ -80,6 +82,7 @@
         <v-icon
           small
           class="mr-2"
+          
           @click="showItem(item)"
         >
           mdi-eye
@@ -146,7 +149,8 @@
         { text: 'Cantidad', value: 'cantidad' },
         { text: 'Nombre', value: 'nombre' },
         { text: 'Marca', value: 'marca' },
-        { text: 'Precio', value: 'precio' },
+        { text: 'Precio Unitario', value: 'precio' },
+        { text: 'Total', value: 'total' },
         { text: 'Imagen', value: 'imagen' },
       ],
       tableLoading: false,
