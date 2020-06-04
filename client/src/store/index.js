@@ -19,11 +19,15 @@ export default new Vuex.Store({
     users: [],
     compras: [],
     detalles: [],
+    comprasUser: [],
   },
   getters: {
     //account
     isAuthenticated(state) {
       return state.account.token !== null;
+    },
+    getIdUser(state){
+      return state.account.userDetails.id;
     },
     isAdmin(state) {
       return state.account.userDetails ? state.account.userDetails.admin === 1 : false;
@@ -42,6 +46,10 @@ export default new Vuex.Store({
     //compras
     getAllCompras(state) {
       return state.compras;
+    },
+    //comprasUser
+    getAllComprasUser(state) {
+      return state.comprasUser;
     },
     //detalle compras
     getAllDetallesFromCompra(state) {
@@ -79,9 +87,13 @@ export default new Vuex.Store({
     setUsers(state, payload) {
       state.users = payload;
     },
-    //users
+    //compras
     setCompras(state, payload) {
       state.compras = payload;
+    },
+    //compras-user
+    setComprasUser(state, payload) {
+      state.comprasUser = payload;
     },
     //users
     setDetalles(state, payload) {
@@ -297,6 +309,15 @@ export default new Vuex.Store({
       } catch (e) {
         console.error(e);
         return false;
+      }
+    },
+    //compras para usuario
+    async loadComprasUser({commit,dispatch},id) {
+      try {
+        const response = await API.get(`/compra/select-usuario/${id}`);
+        commit('setComprasUser', response.data);
+      } catch (e) {
+        console.error(e);
       }
     },
     //detalle compras
