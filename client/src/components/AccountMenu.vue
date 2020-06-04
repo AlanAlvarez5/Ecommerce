@@ -12,7 +12,12 @@
               v-on="on"
               class="mx-3"
       >
-        <v-icon>mdi-account</v-icon>
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on }">
+            <v-icon v-on="on">mdi-account</v-icon>
+          </template>
+          <span>Cuenta</span>
+        </v-tooltip>
       </v-btn>
     </template>
     <v-card>

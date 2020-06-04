@@ -50,7 +50,14 @@
                 icon
                 class="ml-2"
         >
-          <v-icon>mdi-cart</v-icon>
+        
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on }">
+              <v-icon v-on="on">mdi-cart</v-icon>
+            </template>
+            <span>Carrito</span>
+          </v-tooltip>
+
           <Cart ref="appCart"/>
         </v-btn>
       </template>

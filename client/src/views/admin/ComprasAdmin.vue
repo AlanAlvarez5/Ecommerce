@@ -29,6 +29,7 @@
               ></v-text-field>
             </v-col>
           </v-row>
+
           <v-dialog  v-model="dialog" max-width="700px">
             <form @submit.prevent="save">
               <v-card class="px-3 py-2">
@@ -76,32 +77,35 @@
              </v-card>
             </form>
           </v-dialog>
+
         </v-toolbar>
       </template>
+
       <template v-slot:item.actions="{ item }">
-        <v-icon
-          small
-          class="mr-2"
-          
-          @click="showItem(item)"
-        >
-          mdi-eye
-        </v-icon>
-        <v-icon
-          small
-          class="mr-2"
-          @click="editItem(item)"
-        >
-          mdi-pencil
-        </v-icon>
-        <v-icon
-          small
-          @click="deleteItem(item)"
-        >
-          mdi-delete
-        </v-icon>
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on }">
+            <v-icon small v-on="on" class="mr-2" @click="showItem(item)" >mdi-eye</v-icon>
+          </template>
+          <span>Detalles</span>
+        </v-tooltip>
+
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on }">
+            <v-icon small v-on="on" class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
+          </template>
+          <span>Editar</span>
+        </v-tooltip>
+
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on }">
+            <v-icon small v-on="on" @click="deleteItem(item)">mdi-delete</v-icon>
+          </template>
+          <span>Eliminar</span>
+        </v-tooltip>
+
       </template>
     </v-data-table>
+    
     <v-dialog v-model="confirmDeleteDialog" max-width="300">
       <v-card>
         <v-card-title class="headline">¿Estás seguro?</v-card-title>
