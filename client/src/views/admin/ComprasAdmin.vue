@@ -54,7 +54,11 @@
                           class="elevation-1"
                           :loading="tableLoading"
                           :search="search"
-                        ></v-data-table>
+                        >
+                          <template v-slot:item.imagen="{ item }">
+                            <img :src=item.imagen style="width: 50px; height: 50px" />
+                          </template>
+                        </v-data-table>
                       </v-col>
                   </v-container>
                 </v-card-text>
@@ -143,6 +147,7 @@
         { text: 'Nombre', value: 'nombre' },
         { text: 'Marca', value: 'marca' },
         { text: 'Precio', value: 'precio' },
+        { text: 'Imagen', value: 'imagen' },
       ],
       tableLoading: false,
       saveLoading: false,

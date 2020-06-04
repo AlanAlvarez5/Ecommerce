@@ -303,7 +303,12 @@ export default new Vuex.Store({
     async loadDetalleCompra({commit, dispatch},id) {
       try {
         const response = await API.get(`/compra/select-detail/${id}`);
-        commit('setDetalles', response.data);
+        const host = utils.methods.getHost().concat('products/');
+        const formattedDetail = response.data.map(product => {
+          product.imagen = host + product.imagen;
+          return product;
+        });
+        commit('setDetalles', formattedDetail);
       } catch (e) {
         console.error(e);
       }
