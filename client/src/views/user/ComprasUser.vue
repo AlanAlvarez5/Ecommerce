@@ -4,7 +4,6 @@
       <p class="display-1 white--text ml-3">Mis Compras</p>
     </v-row>
     <v-data-table
-            hide-default-footer
             :headers="headers"
             :items="getAllComprasUser" 
             sort-by="id"
