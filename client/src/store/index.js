@@ -288,7 +288,7 @@ export default new Vuex.Store({
         const response = await API.post('/compra/add',compraData);
         if(response.data.mensaje === 'COMPRA_ADDED') {
           await dispatch('loadComprasUser',compraData.get('usuario_id'));
-          return true;
+          return true,response.data.record.insertId;
         } else{
           return false;
         }
@@ -344,6 +344,14 @@ export default new Vuex.Store({
           return product;
         });
         commit('setDetalles', formattedDetail);
+      } catch (e) {
+        console.error(e);
+      }
+    },
+    async addDetalleCompra({commit, dispatch},detalleCompra) {
+      try {
+        const response = await API.post(`/compra/add-detail`,detalleCompra);
+        commit('setDetalles', response.data);
       } catch (e) {
         console.error(e);
       }
