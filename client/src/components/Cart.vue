@@ -49,7 +49,7 @@
                     large
                     text
                     class="red--text mr-4"
-                    @click="cleanCart"
+                    @click="cleanCart(1)"
             >
               <v-icon left>mdi-trash-can</v-icon>
               VACIAR CARRITO
@@ -58,6 +58,7 @@
                     dark
                     large
                     color="gradient-45deg-purple-deep-orange"
+                    @click="buyCart()"
             >
               <v-icon left>mdi-cart</v-icon>
               COMPRAR CARRITO
@@ -71,6 +72,7 @@
 
 <script>
   import {utils} from "./mixins/utils";
+  import {mapActions, mapGetters} from 'vuex';
 
   export default {
     mixins: [utils],
@@ -78,19 +80,23 @@
       return {
         showCart: false,
         cartItems: [],
+        total: 0,
       }
     },
     computed: {
+       ...mapGetters(['getIdUser']),
       getTotalPrice() {
         if (!this.cartItems) this.cartItems = [];
         let totalPrice = 0;
         if (this.cartItems.length !== 0) {
           this.cartItems.forEach(el => totalPrice += el.quantity * el.price);
         }
+        this.total = totalPrice;
         return this.numberWithCommas(totalPrice);
       }
     },
     methods: {
+      ...mapActions(['addCompra','addDetalleCompra']),
       deleteItem(productId) {
         const itemIndex = this.cartItems.findIndex(el => el.product_id === productId);
         this.cartItems.splice(itemIndex, 1);
@@ -111,17 +117,49 @@
           }, 1000);
         }
       },
-      cleanCart() {
+      cleanCart(flag) {
         localStorage.removeItem('cart');
         setTimeout(() => {
           this.cartItems = [];
         }, 1000);
         this.showCart = false;
-        this.$store.commit('showSnackBar', {
+        if(flag) this.$store.commit('showSnackBar', {
           color: 'gradient-45deg-deep-purple-blue',
           text: 'Has vaciado el carrito.'
         });
-      }
+        else this.$store.commit('showSnackBar', {
+          color: 'gradient-45deg-deep-purple-blue',
+          text: 'Compra realizada con éxito.'
+        });
+      },
+      createFormData() {
+        const formData = new FormData();
+        formData.append('usuario_id', this.getIdUser);
+        formData.append('total', this.total);
+        return formData;
+      },
+      createFormDetailData(compra_id,producto_id,cantidad) {
+        const formData = new FormData();
+        formData.append('compra_id',compra_id);
+        formData.append('producto_id',producto_id );
+        formData.append('cantidad',cantidad );
+        return formData;
+      },
+      async buyCart() {
+        const formData = this.createFormData();
+        let lastCompra = await this.addCompra(formData);
+        var i=0;
+        for(i=0;i<this.cartItems.length;i++){
+          await this.userDetail(lastCompra,this.cartItems[i].product_id,this.cartItems[i].quantity);
+        }
+        this.cleanCart(0);
+
+      },
+      async userDetail(compra_id,producto_id,cantidad) {
+        const formData = this.createFormDetailData(compra_id,producto_id,cantidad);
+        await this.addDetalleCompra(formData);
+      },
+
     },
   }
 </script>
