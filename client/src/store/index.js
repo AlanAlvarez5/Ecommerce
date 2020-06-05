@@ -283,6 +283,20 @@ export default new Vuex.Store({
         console.error(e);
       }
     },
+    async addCompra({commit, dispatch}, compraData) {
+      try {
+        const response = await API.post('/compra/add',compraData);
+        if(response.data.mensaje === 'COMPRA_ADDED') {
+          await dispatch('loadComprasUser',compraData.get('usuario_id'));
+          return true;
+        } else{
+          return false;
+        }
+      } catch (e) {
+        console.error(e);
+        return false;
+      }
+    },
     async deleteCompra({commit, dispatch}, id) {
       try {
         const response = await API.delete(`/compra/delete/${id}`);
