@@ -19,9 +19,12 @@
                     :class="{'gray-rounded': index % 2 === 0}"
                     :key="item.product_id"
             >
+
               <v-img :src="item.img" max-width="50px" class="mr-5"></v-img>
               <v-list-item-content>
-                <v-list-item-title>{{ item.name }}</v-list-item-title>
+                <v-list-item-title>
+                   {{ item.name }}
+                </v-list-item-title>
                 <v-list-item-subtitle>${{ numberWithCommas(item.price) }}.00 x {{ item.quantity }}
                 </v-list-item-subtitle>
                 <v-list-item-subtitle>Total: ${{ numberWithCommas(item.price * item.quantity) }}.00
@@ -108,6 +111,7 @@
       ...mapActions(['addCompra', 'addDetalleCompra', 'showLogin']),
       deleteItem(productId) {
         const itemIndex = this.cartItems.findIndex(el => el.product_id === productId);
+        this.$store.state.UI.cartBadgeValue -= this.cartItems[itemIndex].quantity;
         this.cartItems.splice(itemIndex, 1);
         localStorage.setItem('cart', JSON.stringify(this.cartItems));
         if (this.cartItems.length === 0) {
@@ -128,6 +132,7 @@
       },
       cleanCart(flag) {
         localStorage.removeItem('cart');
+        this.$store.state.UI.cartBadgeValue = 0;
         setTimeout(() => {
           this.cartItems = [];
         }, 1000);

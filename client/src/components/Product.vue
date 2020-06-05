@@ -104,7 +104,7 @@
     },
     watch: {
       showDialog(willOpen) {
-        if(willOpen) {
+        if (willOpen) {
           const array = [...Array(this.stock + 1).keys()];
           array.shift();
           this.quantityArray = array;
@@ -116,10 +116,11 @@
     methods: {
       addToCart() {
         const storageCart = localStorage.getItem('cart');
-        if(storageCart) {
+        this.$store.state.UI.cartBadgeValue += this.quantitySelected;
+        if (storageCart) {
           const cart = JSON.parse(storageCart);
           const itemIndex = cart.findIndex(el => el.product_id === this.product_id);
-          if(itemIndex === -1) {
+          if (itemIndex === -1) {
             cart.push({
               product_id: this.product_id,
               brand: this.brand,

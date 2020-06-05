@@ -44,6 +44,10 @@
       HomeAdmin
     },
     async created() {
+      const storage = JSON.parse(localStorage.getItem('cart'));
+      let quantity = 0;
+      storage.forEach(el => quantity += el.quantity);
+      this.$store.state.UI.cartBadgeValue = quantity;
       this.loadProducts();
     }
   }

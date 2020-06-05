@@ -43,7 +43,13 @@
         >
           <v-tooltip bottom>
             <template v-slot:activator="{ on }">
-              <v-icon v-on="on">mdi-cart</v-icon>
+              <v-badge
+                :content="getCartBadgeValue"
+                :value="getCartBadgeValue"
+                transition="slide-x-transition"
+              >
+                <v-icon v-on="on">mdi-cart</v-icon>
+              </v-badge>
             </template>
             <span>Carrito</span>
           </v-tooltip>
@@ -100,7 +106,7 @@
     }),
     computed: {
       ...mapGetters([
-        'isAdmin', 'isAuthenticated', 'isShowLogin'
+        'isAdmin', 'isAuthenticated', 'isShowLogin', 'getCartBadgeValue'
       ]),
       shouldShowLogin: {
         get() {
@@ -120,7 +126,7 @@
     components: {
       Cart,
       AccountMenu
-    },
+    }
   }
 </script>
 

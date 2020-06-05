@@ -16,6 +16,7 @@ export default new Vuex.Store({
       token: null,
     },
     UI: {
+      cartBadgeValue: 0,
       showLogin: false
     },
     products: [],
@@ -26,6 +27,9 @@ export default new Vuex.Store({
   },
   getters: {
     //UI
+    getCartBadgeValue(state) {
+      return state.UI.cartBadgeValue;
+    },
     isShowLogin(state) {
       return state.UI.showLogin;
     },
@@ -187,7 +191,6 @@ export default new Vuex.Store({
         const formattedProducts = response.data.map(product => {
           product.imagen = host + product.imagen;
           product.descripcion = product.descripcion.split(',');
-          product.precio = '$' + utils.methods.numberWithCommas(product.precio) + '.00';
           return product;
         });
         commit('setProducts', formattedProducts);
