@@ -19,7 +19,7 @@
                     :class="{'gray-rounded': index % 2 === 0}"
                     :key="item.product_id"
             >
-              <v-img :src="item.img" :alt="item.product_id" max-width="50px" class="mr-5"></v-img>
+              <v-img :src="item.img" max-width="50px" class="mr-5"></v-img>
               <v-list-item-content>
                 <v-list-item-title>{{ item.name }}</v-list-item-title>
                 <v-list-item-subtitle>${{ numberWithCommas(item.price) }}.00 x {{ item.quantity }}
@@ -73,6 +73,7 @@
 <script>
   import {utils} from "./mixins/utils";
   import {mapActions, mapGetters} from 'vuex';
+  import AccountMenu from "./AccountMenu";
 
   export default {
     mixins: [utils],
@@ -84,7 +85,15 @@
       }
     },
     computed: {
-       ...mapGetters(['getIdUser']),
+      ...mapGetters(['getIdUser', 'isAuthenticated', 'isShowLogin']),
+      shouldShowLogin: {
+        get() {
+          return this.isShowLogin;
+        },
+        set(_) {
+          return this.$store.state.UI.showLogin = false;
+        }
+      },
       getTotalPrice() {
         if (!this.cartItems) this.cartItems = [];
         let totalPrice = 0;
@@ -96,7 +105,7 @@
       }
     },
     methods: {
-      ...mapActions(['addCompra','addDetalleCompra']),
+      ...mapActions(['addCompra', 'addDetalleCompra', 'showLogin']),
       deleteItem(productId) {
         const itemIndex = this.cartItems.findIndex(el => el.product_id === productId);
         this.cartItems.splice(itemIndex, 1);
@@ -111,7 +120,7 @@
           this.cartItems = JSON.parse(storageCart);
         }
         this.showCart = true;
-        if(this.cartItems.length === 0) {
+        if (this.cartItems.length === 0) {
           setTimeout(() => {
             this.showCart = false;
           }, 1000);
@@ -123,7 +132,7 @@
           this.cartItems = [];
         }, 1000);
         this.showCart = false;
-        if(flag) this.$store.commit('showSnackBar', {
+        if (flag) this.$store.commit('showSnackBar', {
           color: 'gradient-45deg-deep-purple-blue',
           text: 'Has vaciado el carrito.'
         });
@@ -138,29 +147,39 @@
         formData.append('total', this.total);
         return formData;
       },
-      createFormDetailData(compra_id,producto_id,cantidad) {
+      createFormDetailData(compra_id, producto_id, cantidad) {
         const formData = new FormData();
-        formData.append('compra_id',compra_id);
-        formData.append('producto_id',producto_id );
-        formData.append('cantidad',cantidad );
+        formData.append('compra_id', compra_id);
+        formData.append('producto_id', producto_id);
+        formData.append('cantidad', cantidad);
         return formData;
       },
       async buyCart() {
-        const formData = this.createFormData();
-        let lastCompra = await this.addCompra(formData);
-        var i=0;
-        for(i=0;i<this.cartItems.length;i++){
-          await this.userDetail(lastCompra,this.cartItems[i].product_id,this.cartItems[i].quantity);
+        if (this.isAuthenticated) {
+          const formData = this.createFormData();
+          let lastCompra = await this.addCompra(formData);
+          for (let i = 0; i < this.cartItems.length; i++) {
+            await this.userDetail(lastCompra, this.cartItems[i].product_id, this.cartItems[i].quantity);
+          }
+          this.cleanCart(0);
+        } else {
+          this.$store.commit('showSnackBar', {
+            color: 'gradient-45deg-deep-purple-blue',
+            text: 'Primero debes iniciar sesión.'
+          });
+          this.showCart = false;
+          this.showLogin();
         }
-        this.cleanCart(0);
-
       },
-      async userDetail(compra_id,producto_id,cantidad) {
-        const formData = this.createFormDetailData(compra_id,producto_id,cantidad);
+      async userDetail(compra_id, producto_id, cantidad) {
+        const formData = this.createFormDetailData(compra_id, producto_id, cantidad);
         await this.addDetalleCompra(formData);
       },
 
     },
+    components: {
+      AccountMenu
+    }
   }
 </script>
 

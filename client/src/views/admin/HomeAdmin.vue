@@ -2,7 +2,7 @@
     <v-container>
         <p class="display-1 white--text">Bienvenido Administrador</p>
         <v-container>
-            <div class="ecommerce" align="center">
+            <div class="ecommerce mt-12" align="center">
                 la función de ecommerce
             </div>
         </v-container>

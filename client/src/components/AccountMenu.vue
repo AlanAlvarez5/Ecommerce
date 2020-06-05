@@ -1,26 +1,5 @@
 <template>
-  <v-menu
-          v-model="accountMenu"
-          :close-on-content-click="false"
-          :nudge-width="200"
-          transition="slide-y-transition"
-          offset-y
-  >
-    <template v-slot:activator="{ on }">
-      <v-btn
-              icon
-              v-on="on"
-              class="mx-3"
-      >
-        <v-tooltip bottom>
-          <template v-slot:activator="{ on }">
-            <v-icon v-on="on">mdi-account</v-icon>
-          </template>
-          <span>Cuenta</span>
-        </v-tooltip>
-      </v-btn>
-    </template>
-    <v-card>
+    <v-card width="350px">
       <template v-if="isAuthenticated && !isLoggingIn">
         <v-list>
           <v-list-item>
@@ -186,7 +165,6 @@
         </v-container>
       </template>
     </v-card>
-  </v-menu>
 </template>
 
 <script>
@@ -213,7 +191,8 @@
       ...mapGetters([
         'isAuthenticated',
         'isAdmin',
-        'getUserDetails'
+        'getUserDetails',
+        'isShowLogin'
       ]),
     },
     methods: {
@@ -239,7 +218,7 @@
           password: this.formData.password
         });
         if (result === 'ACCESS') {
-          this.accountMenu = false;
+          this.$store.state.UI.showLogin = false;
           setTimeout(() => {
             this.isLoggingIn = false;
           }, 250);
@@ -285,7 +264,7 @@
         this.formData.address = '';
         this.formData.city = '';
         this.formData.name = '';
-        this.accountMenu = false;
+        this.$store.state.UI.showLogin = false;
         setTimeout(() => {
           this.logout();
         }, 250);
@@ -297,9 +276,10 @@
       }
     },
     created() {
+      this.accountMenu = true;
       window.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
-          if (this.accountMenu) {
+          if (this.isShowLogin) {
             this.registerMode ? this.submitRegisterData() : this.submitLoginData();
           }
         }
@@ -308,6 +288,19 @@
   }
 </script>
 
-<style scoped>
-
+<style>
+  .menu-popover-enter,
+  .menu-popover-leave-to {
+    opacity: 0;
+    transform: rotateY(50deg);
+  }
+  .menu-popover-enter-to,
+  .menu-popover-leave {
+    opacity: 1;
+    transform: rotateY(0deg);
+  }
+  .menu-popover-enter-active,
+  .menu-popover-leave-active {
+    transition: opacity, transform 200ms ease-out;
+  }
 </style>

@@ -15,6 +15,9 @@ export default new Vuex.Store({
       userDetails: null,
       token: null,
     },
+    UI: {
+      showLogin: false
+    },
     products: [],
     users: [],
     compras: [],
@@ -22,6 +25,10 @@ export default new Vuex.Store({
     comprasUser: [],
   },
   getters: {
+    //UI
+    isShowLogin(state) {
+      return state.UI.showLogin;
+    },
     //account
     isAuthenticated(state) {
       return state.account.token !== null;
@@ -70,6 +77,9 @@ export default new Vuex.Store({
       state.account.userDetails = null;
       state.account.token = null;
     },
+    setShowLogin(state) {
+      state.UI.showLogin = !state.UI.showLogin;
+    },
     //utils
     showSnackBar(state, payload) {
       state.snackBar.text = payload.text;
@@ -102,6 +112,9 @@ export default new Vuex.Store({
   },
   actions: {
     //account
+    showLogin({commit}) {
+      commit('setShowLogin');
+    },
     async login({commit}, authData) {
       try {
         const response = await API.post('/login', {
@@ -174,6 +187,7 @@ export default new Vuex.Store({
         const formattedProducts = response.data.map(product => {
           product.imagen = host + product.imagen;
           product.descripcion = product.descripcion.split(',');
+          product.precio = '$' + utils.methods.numberWithCommas(product.precio) + '.00';
           return product;
         });
         commit('setProducts', formattedProducts);
@@ -278,7 +292,12 @@ export default new Vuex.Store({
     async loadCompras({commit}) {
       try {
         const response = await API.get('/compra/select');
-        commit('setCompras', response.data);
+        const compras = response.data.map(compra => {
+          compra.total = '$' + utils.methods.numberWithCommas(compra.total) + '.00';
+          return compra;
+        });
+        console.log(compras);
+        commit('setCompras', compras);
       } catch (e) {
         console.error(e);
       }
@@ -329,7 +348,11 @@ export default new Vuex.Store({
     async loadComprasUser({commit,dispatch},id) {
       try {
         const response = await API.get(`/compra/select-usuario/${id}`);
-        commit('setComprasUser', response.data);
+        const compras = response.data.map(compra => {
+          compra.total = '$' + utils.methods.numberWithCommas(compra.total) + '.00';
+          return compra;
+        });
+        commit('setComprasUser', compras);
       } catch (e) {
         console.error(e);
       }
