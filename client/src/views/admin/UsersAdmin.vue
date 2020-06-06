@@ -4,7 +4,6 @@
       <p class="display-1 white--text ml-3">Lista de Usuarios</p>
     </v-row>
     <v-data-table
-            hide-default-footer
             :headers="headers"
             :items="getAllUsers" 
             sort-by="id"
