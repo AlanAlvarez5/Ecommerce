@@ -7,15 +7,17 @@
       <v-card-subtitle class="pb-0">{{ brand }}</v-card-subtitle>
     </v-container>
     <v-row
-            style="height: 340px; width: 430px"
-            justify="center"
+            style="height: 340px; max-width: 430px"
+            justify="center" align="center"
     >
-      <v-img
-              class="white--text align-end"
-              max-width="250px"
-              :src="img"
-      >
-      </v-img>
+      <div style="width: 250px;">
+        <v-img
+                class="white--text align-end"
+                :src="img"
+        >
+        </v-img>
+      </div>
+
     </v-row>
 
     <v-card-text class="headline text-center">
@@ -41,11 +43,14 @@
       <v-card class="fill-height">
         <v-container>
           <v-row>
-            <v-col cols="12" md="6" class="d-flex justify-center" style="width: 350px; height: 500px">
-              <v-img
-                      max-width="350px"
-                      :src="img"
-              />
+            <v-col cols="12" md="6" class="d-flex justify-center align-center" style="width: 350px; height: 500px">
+              <div style="width: 300px;">
+                <v-img
+                        class="white--text align-end"
+                        :src="img"
+                >
+                </v-img>
+              </div>
             </v-col>
             <v-col cols="12" md="6">
               <v-card-title class="headline">{{ name }}</v-card-title>
