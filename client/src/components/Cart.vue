@@ -58,6 +58,7 @@
               VACIAR CARRITO
             </v-btn>
             <v-btn
+                    to="/comprasuser"
                     dark
                     large
                     color="gradient-45deg-purple-deep-orange"
