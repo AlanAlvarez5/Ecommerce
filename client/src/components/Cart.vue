@@ -58,6 +58,7 @@
               VACIAR CARRITO
             </v-btn>
             <v-btn
+                    v-if="this.isAuthenticated" 
                     to="/comprasuser"
                     dark
                     large
