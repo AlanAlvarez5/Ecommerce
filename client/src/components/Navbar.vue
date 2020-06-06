@@ -36,6 +36,15 @@
       </template>
       <template>
         <v-spacer></v-spacer>
+        <v-text-field
+                solo
+                flat
+                label="Buscar"
+                prepend-inner-icon="mdi-magnify"
+                clearable
+                background-color="gradient-45deg-indigo-purple-non"
+                class="mt-7 mx-5"
+        ></v-text-field>
         <v-btn v-if="!isAdmin"
                @click="showCart"
                icon
