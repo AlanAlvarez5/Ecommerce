@@ -10,7 +10,7 @@
             style="height: 340px; max-width: 430px"
             justify="center" align="center"
     >
-      <div style="width: 250px;">
+      <div style="width: 340px;">
         <v-img
                 class="white--text align-end"
                 :src="img"
@@ -44,7 +44,7 @@
         <v-container>
           <v-row>
             <v-col cols="12" md="6" class="d-flex justify-center align-center" style="width: 350px; height: 500px">
-              <div style="width: 300px;">
+              <div style="width: 350px;">
                 <v-img
                         class="white--text align-end"
                         :src="img"
