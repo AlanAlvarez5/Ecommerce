@@ -147,6 +147,7 @@ router.post('/add-detail', async(req, res) => {
     try {
         let { compra_id, producto_id, cantidad } = req.body;
         await db.query(`INSERT into detalle (compra_id, producto_id, cantidad) values (${compra_id}, ${producto_id}, ${cantidad})`)
+        await db.query(`UPDATE producto SET stock = stock-${cantidad} where id = ${producto_id}`);
 
         res.json({
             mensaje: 'DETAIL_ADD'
