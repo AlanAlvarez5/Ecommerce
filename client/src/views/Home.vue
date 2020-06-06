@@ -4,7 +4,7 @@
       <p class="display-1 white--text ml-3">Catálogo de productos</p>
     </v-row>
     <v-row>
-      <v-col cols="12" sm="6" lg="4" xl="3"  v-for="product in getAllProducts" :key="product.id">
+      <v-col cols="12" sm="6" lg="4" xl="3"  v-for="product in getAllProducts" :key="product.id" v-if="product.stock != 0">
         <ProductCard
                 :product_id="product.id"
                 :brand="product.marca"
