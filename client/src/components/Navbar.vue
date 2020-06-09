@@ -42,6 +42,7 @@
                 label="Buscar"
                 prepend-inner-icon="mdi-magnify"
                 clearable
+                @input="updateSearchBox"
                 background-color="gradient-45deg-indigo-purple-non"
                 class="mt-7 mx-5"
         ></v-text-field>
@@ -130,6 +131,9 @@
       ...mapActions(['showLogin']),
       showCart() {
         this.$refs.appCart.showCartBottomSheet();
+      },
+      updateSearchBox(text) {
+        this.$store.commit('updateSearchBox', text);
       }
     },
     components: {

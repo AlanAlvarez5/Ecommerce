@@ -17,7 +17,8 @@ export default new Vuex.Store({
     },
     UI: {
       cartBadgeValue: 0,
-      showLogin: false
+      showLogin: false,
+      searchBoxText: ''
     },
     products: [],
     users: [],
@@ -27,6 +28,9 @@ export default new Vuex.Store({
   },
   getters: {
     //UI
+    getSearchBoxText(state) {
+      return state.UI.searchBoxText;
+    },
     getCartBadgeValue(state) {
       return state.UI.cartBadgeValue;
     },
@@ -68,6 +72,10 @@ export default new Vuex.Store({
     },
   },
   mutations: {
+    //UI
+    updateSearchBox(state, text) {
+      state.UI.searchBoxText = text;
+    },
     //account
     authUser(state, userData) {
       state.account.token = userData.token;
