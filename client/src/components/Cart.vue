@@ -58,7 +58,6 @@
               VACIAR CARRITO
             </v-btn>
             <v-btn
-                    to="/comprasuser"
                     dark
                     large
                     color="gradient-45deg-purple-deep-orange"
@@ -167,6 +166,7 @@
           for (let i = 0; i < this.cartItems.length; i++) {
             await this.userDetail(lastCompra, this.cartItems[i].product_id, this.cartItems[i].quantity);
           }
+          await this.$router.push('/comprasuser');
           this.cleanCart(0);
         } else {
           this.$store.commit('showSnackBar', {
