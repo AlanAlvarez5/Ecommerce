@@ -37,6 +37,7 @@
       <template>
         <v-spacer></v-spacer>
         <v-text-field
+                v-if="!isAdmin"
                 solo
                 flat
                 label="Buscar"
