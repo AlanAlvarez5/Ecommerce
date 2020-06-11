@@ -25,6 +25,7 @@ module.exports = {
     llave: 'keyexample',
     salt_rounds: 12
 } 
+``
 5.- Puesta en marcha del servidor. Ejecutar en server/
 ```
 npm run devbabel
