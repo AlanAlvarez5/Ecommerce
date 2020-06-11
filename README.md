@@ -12,6 +12,7 @@ npm install
 ```
 
 3.- Ejecutar el script de la base de datos que se encuentra en *db/*.
+
 4.- Dentro de server/ crear el archivo de configuración *keys.js*.
 
 ```
