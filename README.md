@@ -1,6 +1,9 @@
 # Ecommerce
 Implementación de ejemplo de un Ecommerce. Vue.js, Vuex, Vuetify, Node.js, Express.js, JWT
 
+#Video explicativo:
+https://www.youtube.com/watch?v=xLuhmorpVnY
+
 # Para ejecutar el programa:
 
 1.- Clonar el repositorio.
